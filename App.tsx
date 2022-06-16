@@ -12,12 +12,22 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Image,
+  Alert,
+  Linking,
+  Platform,
 } from 'react-native';
-import {NavigationContainer, useNavigation} from '@react-navigation/native';
+import {
+  DarkTheme,
+  NavigationContainer,
+  useFocusEffect,
+  useIsFocused,
+  useNavigation,
+} from '@react-navigation/native';
 import {
   createStackNavigator,
   StackNavigationProp,
 } from '@react-navigation/stack';
+import {Provider, useDispatch, useSelector} from 'react-redux';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import SplashScreen from 'react-native-splash-screen';
 import CreateAccount from './screens/auth/CreateAccount';
@@ -35,7 +45,7 @@ import ViewMembers from './screens/members/ViewMembers';
 import InviteMembers from './screens/members/InviteMembers';
 import EditCircle from './screens/circle/EditCircle';
 import WalletDashboard from './screens/wallet/WalletDashboard';
-import Fund from './screens/wallet/Fund';
+import AddCard from './screens/wallet/AddCard';
 import Withdraw from './screens/wallet/Withdraw';
 import Notifications from './screens/notifications/Notifications';
 import Transactions from './screens/dashboard/Transactions';
@@ -46,12 +56,134 @@ import ChangePassword from './screens/settings/ChangePassword';
 import TermsandConditions from './screens/settings/TermsandConditions';
 import PrivacyPolicy from './screens/settings/PrivacyPolicy';
 import BankAccount from './screens/settings/BankAccount';
+import {store} from './store';
+import {authActions} from './src/actions/auth.actions';
+import {RootState} from './src/reducers';
+import {userActions} from './src/actions/user.actions';
+import {walletActions} from './src/actions/wallet.actions';
+import {circleActions} from './src/actions/circle.actions';
+import Debtors from './screens/circle/Debtors';
+import FundedMembers from './screens/circle/FundedMembers';
+import Config from 'react-native-config';
+import RNPaystack from 'react-native-paystack';
+import messaging, {firebase} from '@react-native-firebase/messaging';
+import axios from 'axios';
+import linking from './src/utils/linking';
+import ResetPassword from './screens/auth/ResetPassword';
 
-const App = () => {
+const AppWrapper = () => {
+  RNPaystack.init({publicKey: Config.PAYSTACK_PUBLIC});
   const Stack = createStackNavigator();
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.authReducer.token);
+  const onboarding = useSelector(state => state.authReducer.onboarding);
+  const firstname = useSelector(
+    (state: RootState) => state.userReducer.profile?.firstname,
+  );
+  const _id = useSelector((state: RootState) => state.authReducer.userId);
+  const profile = useSelector((state: RootState) => state.userReducer.profile);
+  const wallet = useSelector((state: RootState) => state.walletReducer.wallet);
+  const active = useSelector((state: RootState) => state.circleReducer.active);
+  var fcmUnsubscribe: () => void;
 
   // const CircleStack = createStackNavigator<CircleStackParamsList>();
   const Tab = createBottomTabNavigator();
+
+  // const app = firebase.initializeApp({
+  //   appId: '1:880775330381:ios:23764b7f92f24dc2b5fa04',
+  //   projectId: 'ajo-f1b9b',
+  //   authDomain: 'ajo-f1b9b.firebaseapp.com',
+  //   apiKey: 'AIzaSyBkqwjauHsURSJJou5oxcbArPYR0HjB0q0',
+  //   messagingSenderId: '880775330381',
+  //   databaseURL: 'https://ajo-f1b9b.firebaseio.com', // Realtime Database
+
+  //   storageBucket: 'ajo-f1b9b.appspot.com',
+  // });
+  // //const analytics = getAnalytics(app);
+
+  // const auth = firebase.auth();
+  // const db = firebase.firestore();
+
+  if (!firebase.apps.length) {
+    firebase.initializeApp({
+      appId: '1:880775330381:ios:23764b7f92f24dc2b5fa04',
+      projectId: 'ajo-f1b9b',
+      authDomain: 'ajo-f1b9b.firebaseapp.com',
+      apiKey: 'AIzaSyBkqwjauHsURSJJou5oxcbArPYR0HjB0q0',
+      messagingSenderId: '880775330381',
+      databaseURL: 'https://ajo-f1b9b.firebaseio.com', // Realtime Database
+
+      storageBucket: 'ajo-f1b9b.appspot.com',
+    });
+  }
+  useEffect(() => {
+    if (token) {
+      const registerToken = (tkn: any) => {
+        axios
+          .post(
+            `${Config.API_URL}/api/users/token`,
+            {token: tkn},
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            },
+          )
+          .then(res => {
+            console.log('Successfully registered token');
+          })
+          .catch(error => {});
+      };
+
+      messaging()
+        .requestPermission()
+        .then(authStatus => {
+          if (
+            authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
+            authStatus === messaging.AuthorizationStatus.PROVISIONAL
+          ) {
+            messaging()
+              .getToken()
+              .then(token => {
+                registerToken(token);
+
+                messaging().onTokenRefresh(token => {
+                  registerToken(token);
+                });
+
+                fcmUnsubscribe = messaging().onMessage(
+                  async (remoteMessage: any) => {
+                    console.log('A new message just arrived', remoteMessage);
+                    Alert.alert(
+                      remoteMessage.notification.title,
+                      remoteMessage.notification.body,
+                    );
+                  },
+                );
+                messaging().onNotificationOpenedApp(remoteMessage => {
+                  // console.log(
+                  //   "Notification caused app to open from background",
+                  //   remoteMessage
+                  // );
+                });
+
+                messaging()
+                  .getInitialNotification()
+                  .then(remoteMessage => {
+                    if (remoteMessage) {
+                      // console.log(
+                      //   "Notification caused app to open from quit state"
+                      // );
+                    }
+                  });
+              });
+          }
+        })
+        .catch(err => {
+          // console.log("Message request permission error", err);
+        });
+    }
+  }, [token]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -59,9 +191,205 @@ const App = () => {
     }, 3000);
   }, []);
 
-  const AuthScreen = () => {
+  useEffect(() => {
+    dispatch(authActions.getUserToken());
+    dispatch(authActions.getOnBoarding());
+    dispatch(authActions.getId());
+  }, []);
+
+  useEffect(() => {
+    if (token && _id) {
+      dispatch(userActions.getProfile(_id, token));
+    }
+  }, [token, _id]);
+
+  useEffect(() => {
+    if (profile) {
+      dispatch(circleActions.generateCircles(token, profile.circles));
+    }
+  }, [profile != null]);
+
+  useEffect(() => {
+    if (profile && Object.keys(wallet).length === 0) {
+      dispatch(walletActions.getWallet(profile.walletId, token));
+    }
+  }, [profile != null, wallet]);
+
+  useEffect(() => {
+    const acceptInvite = async (
+      tkn: string,
+      circleId: string,
+      userId: string,
+    ) => {
+      await axios
+        .get(`${Config.API_URL}/api/invite/${circleId}/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${tkn}`,
+            'Cache-Control': 'no-cache',
+          },
+        })
+        .then(response => {
+          console.log(response);
+
+          Alert.alert(
+            `Circle joined successfully`,
+            `You now have access to ${response.data.message.circle.circlename} circle`,
+          );
+        })
+        .catch(function (error) {
+          console.log(error);
+          Alert.alert(
+            `We couldn't add you`,
+            `${error.response.data.message.body}`,
+          );
+        });
+    };
+    const handleOpenURL = (e: any) => {
+      console.log(e.url);
+      const route = e.url.replace(/.*?:\/\//g, '');
+      // const id = route.match(/\/([^\/]+)\/?$/)[1];
+      const routeName = route.split('/')[1];
+      // do something with the url, in our case navigate(route)
+      console.log(routeName);
+      if (routeName == 'invite') {
+        const tkn = route.split('/')[2];
+        const circleId = route.split('/')[3];
+        const userId = route.split('/')[4];
+        acceptInvite(tkn, circleId, userId);
+        // if (onboarding) {
+        //   Alert.alert(
+        //     'Unable to accept invite',
+        //     'You need to complete the onboarding process before you can accept this invite',
+        //   );
+        // }
+      }
+    };
+
+    if (Platform.OS === 'android') {
+      Linking.getInitialURL().then(url => {});
+    } else {
+      Linking.addEventListener('url', handleOpenURL);
+    }
+  }, []);
+
+  const OnBoardingScreen = () => {
     return (
       <Stack.Navigator>
+        <Stack.Screen
+          name="StepTwo"
+          component={PersonalInformation}
+          options={{
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(authActions.deleteUserToken());
+                    dispatch({type: 'DELETE_PROFILE'});
+                  }}
+                  style={{
+                    // width: '100%',
+                    // height: '100%',
+                    marginRight: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white', fontSize: 16}}>Logout</Text>
+                </TouchableOpacity>
+              );
+            },
+          }}
+        />
+        <Stack.Screen
+          name="StepThree"
+          component={BankAccount}
+          options={{
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(authActions.deleteUserToken());
+                    dispatch({type: 'DELETE_PROFILE'});
+                  }}
+                  style={{
+                    // width: '100%',
+                    // height: '100%',
+                    marginRight: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white', fontSize: 16}}>Logout</Text>
+                </TouchableOpacity>
+              );
+            },
+          }}
+        />
+        <Stack.Screen
+          name="StepFour"
+          component={AddCard}
+          options={{
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerTitle: '',
+            headerRight: () => {
+              return (
+                <TouchableOpacity
+                  onPress={() => {
+                    dispatch(authActions.deleteUserToken());
+                    dispatch({type: 'DELETE_PROFILE'});
+                  }}
+                  style={{
+                    // width: '100%',
+                    // height: '100%',
+                    marginRight: 30,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                  }}>
+                  <Text style={{color: 'white', fontSize: 16}}>Logout</Text>
+                </TouchableOpacity>
+              );
+            },
+          }}
+        />
+      </Stack.Navigator>
+    );
+  };
+
+  const AuthScreen = () => {
+    return (
+      <Stack.Navigator mode="modal">
         <Stack.Screen
           name="SplashOptions"
           component={SplashOptions}
@@ -72,8 +400,8 @@ const App = () => {
           component={CreateAccount}
           options={{
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -90,8 +418,8 @@ const App = () => {
           component={Login}
           options={{
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -108,8 +436,8 @@ const App = () => {
           component={ForgotPassword}
           options={{
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -121,13 +449,31 @@ const App = () => {
             headerTitle: '',
           }}
         />
+        <Stack.Screen
+          name="ResetPassword"
+          component={ResetPassword}
+          options={{
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerTitle: 'Enter your new password',
+          }}
+        />
       </Stack.Navigator>
     );
   };
 
   const HomeScreen = () => {
     return (
-      <Stack.Navigator>
+      <Stack.Navigator mode="modal">
         <Stack.Screen
           name="Dashboard"
           component={Dashboard}
@@ -144,13 +490,13 @@ const App = () => {
               );
             },
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerRight: () => {
               return (
                 <TouchableOpacity style={{marginRight: 30}}>
-                  <Text style={styles.body}>Hi, Iyiola</Text>
+                  <Text style={styles.body}>Hi {firstname}</Text>
                 </TouchableOpacity>
               );
             },
@@ -164,8 +510,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -176,6 +522,73 @@ const App = () => {
             headerTintColor: '#fff',
             headerTitle: () => {
               return <Text style={styles.body}>Transactions</Text>;
+            },
+          }}
+        />
+        <Stack.Screen
+          name="WalletDashboard"
+          component={WalletDashboard}
+          options={{
+            animationEnabled: false,
+            gestureEnabled: false,
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerTitle: () => {
+              return <Text style={styles.body}>My Wallet</Text>;
+            },
+          }}
+        />
+        <Stack.Screen
+          name="AddCard"
+          component={AddCard}
+          options={{
+            animationEnabled: false,
+            gestureEnabled: false,
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerBackTitle: 'Back',
+            headerTitle: () => {
+              return <Text style={styles.body}>Card Details</Text>;
+            },
+          }}
+        />
+        <Stack.Screen
+          name="BankAccount"
+          component={BankAccount}
+          options={{
+            animationEnabled: false,
+            gestureEnabled: false,
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerTitle: () => {
+              return <Text style={styles.body}>{'Bank Account'}</Text>;
             },
           }}
         />
@@ -195,8 +608,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -229,14 +642,60 @@ const App = () => {
           }}
         />
         <Stack.Screen
+          name="Debtors"
+          component={Debtors}
+          options={{
+            animationEnabled: false,
+            gestureEnabled: false,
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerBackTitle: 'Back',
+            headerTitle: () => {
+              return <Text style={styles.body}>Debtors List</Text>;
+            },
+          }}
+        />
+        <Stack.Screen
+          name="FundedMembers"
+          component={FundedMembers}
+          options={{
+            animationEnabled: false,
+            gestureEnabled: false,
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerBackTitle: 'Back',
+            headerTitle: () => {
+              return <Text style={styles.body}>Who has been funded?</Text>;
+            },
+          }}
+        />
+        <Stack.Screen
           name="CreateCircle"
           component={CreateCircle}
           options={{
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -250,13 +709,6 @@ const App = () => {
             headerTitle: () => {
               return <Text style={styles.body}>Create a Circle</Text>;
             },
-            headerRight: () => {
-              return (
-                <TouchableOpacity style={{marginRight: 30}}>
-                  <Text style={styles.body}>Save</Text>
-                </TouchableOpacity>
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -266,8 +718,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -280,19 +732,21 @@ const App = () => {
 
             headerTitle: () => {
               return (
-                <Text style={styles.body}>{route.params.headerTitle} </Text>
+                <Text style={styles.body}>
+                  {active ? active.circlename : ''}
+                </Text>
               );
             },
             headerRight: () => {
               return (
                 <TouchableOpacity
                   onPress={() => {
-                    navigation.navigate('CircleSettings', {...route.params});
+                    navigation.navigate('CircleSettings');
                   }}
                   style={{
                     // width: '100%',
                     // height: '100%',
-                    marginRight: 10,
+                    marginRight: 30,
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
@@ -315,8 +769,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -339,8 +793,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -367,8 +821,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -382,7 +836,7 @@ const App = () => {
             headerTitle: () => {
               return (
                 <Text style={[styles.body, {textAlign: 'center'}]}>
-                  Invite to {route?.params.headerTitle}
+                  Invite to {active.circlename}
                 </Text>
               );
             },
@@ -395,8 +849,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -410,95 +864,11 @@ const App = () => {
             headerTitle: () => {
               return (
                 <Text style={[styles.body, {textAlign: 'center'}]}>
-                  {route?.params.headerTitle}
+                  Edit {active?.circlename}
                 </Text>
               );
             },
-            headerRight: () => {
-              return (
-                <TouchableOpacity style={{marginRight: 30}}>
-                  <Text style={styles.body}>Update</Text>
-                </TouchableOpacity>
-              );
-            },
           })}
-        />
-      </Stack.Navigator>
-    );
-  };
-
-  const WalletScreen = () => {
-    const navigation = useNavigation();
-
-    return (
-      <Stack.Navigator>
-        <Stack.Screen
-          name="WalletDashboard"
-          component={WalletDashboard}
-          options={{
-            animationEnabled: false,
-            gestureEnabled: false,
-            headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
-            },
-            headerBackTitleStyle: {
-              color: '#fff',
-            },
-            headerTitleStyle: {
-              color: '#fff',
-            },
-            headerTintColor: '#fff',
-            headerTitle: () => {
-              return <Text style={styles.body}>My Wallet</Text>;
-            },
-          }}
-        />
-        <Stack.Screen
-          name="Fund"
-          component={Fund}
-          options={{
-            animationEnabled: false,
-            gestureEnabled: false,
-            headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
-            },
-            headerBackTitleStyle: {
-              color: '#fff',
-            },
-            headerTitleStyle: {
-              color: '#fff',
-            },
-            headerTintColor: '#fff',
-            headerBackTitle: 'Back',
-            headerTitle: () => {
-              return <Text style={styles.body}>Fund Wallet</Text>;
-            },
-          }}
-        />
-        <Stack.Screen
-          name="Withdraw"
-          component={Withdraw}
-          options={{
-            animationEnabled: false,
-            gestureEnabled: false,
-            headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
-            },
-            headerBackTitleStyle: {
-              color: '#fff',
-            },
-            headerTitleStyle: {
-              color: '#fff',
-            },
-            headerBackTitle: 'Back',
-            headerTintColor: '#fff',
-            headerTitle: () => {
-              return <Text style={styles.body}>Withdraw Money</Text>;
-            },
-          }}
         />
       </Stack.Navigator>
     );
@@ -508,7 +878,7 @@ const App = () => {
     const navigation = useNavigation();
 
     return (
-      <Stack.Navigator>
+      <Stack.Navigator mode="modal">
         <Stack.Screen
           name="Notifications"
           component={Notifications}
@@ -516,8 +886,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -539,7 +909,7 @@ const App = () => {
     const navigation = useNavigation();
 
     return (
-      <Stack.Navigator>
+      <Stack.Navigator mode="modal">
         <Stack.Screen
           name="Settings"
           component={Settings}
@@ -547,8 +917,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -569,8 +939,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -582,13 +952,6 @@ const App = () => {
             headerTitle: () => {
               return <Text style={styles.body}>Personal</Text>;
             },
-            headerRight: () => {
-              return (
-                <TouchableOpacity onPress={() => {}} style={{marginRight: 30}}>
-                  <Text style={styles.body}>Update </Text>
-                </TouchableOpacity>
-              );
-            },
           }}
         />
         <Stack.Screen
@@ -598,8 +961,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -620,8 +983,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -642,8 +1005,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -664,8 +1027,8 @@ const App = () => {
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -679,15 +1042,39 @@ const App = () => {
             },
           }}
         />
+
         <Stack.Screen
-          name="BankAccount"
+          name="AddCardSettings"
+          component={AddCard}
+          options={{
+            animationEnabled: false,
+            gestureEnabled: false,
+            headerStyle: {
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
+            },
+            headerBackTitleStyle: {
+              color: '#fff',
+            },
+            headerTitleStyle: {
+              color: '#fff',
+            },
+            headerTintColor: '#fff',
+            headerBackTitle: 'Back',
+            headerTitle: () => {
+              return <Text style={styles.body}>Card Details</Text>;
+            },
+          }}
+        />
+        <Stack.Screen
+          name="BankAccountSettings"
           component={BankAccount}
           options={{
             animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#1C1C1C',
-              shadowColor: '#181818',
+              backgroundColor: '#0a0612',
+              shadowColor: '#0a0612',
             },
             headerBackTitleStyle: {
               color: '#fff',
@@ -706,30 +1093,38 @@ const App = () => {
   };
 
   return (
-    <NavigationContainer>
+    <NavigationContainer theme={DarkTheme} linking={linking}>
       <Tab.Navigator
         tabBarOptions={{
+        
           activeTintColor: '#000',
-          showLabel: false,
+          showLabel: true,
           // inactiveTintColor: 'lightgray',
-          activeBackgroundColor: '#0A3C25',
+          activeBackgroundColor: '#733a78',
+
 
           tabStyle: {
-            marginLeft:20,
-            marginRight:20,
-            borderRadius: 40,
+           paddingBottom: 15,
+           paddingTop: 10,
+       
+            // marginRight: 20,
+            // borderRadius: 40,
           },
           // inactiveBackgroundColor: '#b55031',
           labelStyle: {
             fontSize: 12,
+            color:"white",
+            marginBottom:20
           },
           style: {
-            backgroundColor: '#1C1C1C',
+            backgroundColor: '#0a0612',
             borderTopColor: '#ffffff00',
             paddingTop: 8,
+            paddingBottom:2,
+            height:110
           },
         }}>
-        {2 == 1 ? (
+        {!profile == true ? (
           <Tab.Screen
             name="Splash"
             component={AuthScreen}
@@ -737,12 +1132,27 @@ const App = () => {
           />
         ) : (
           <>
-            <Tab.Screen
-              name="Home"
-              component={HomeScreen}
-              options={{
-                tabBarIcon: ({focused}) => {
-                  if (focused) {
+            {onboarding ? (
+              <Tab.Screen
+                name="OnBoardingScreen"
+                component={OnBoardingScreen}
+                options={{tabBarVisible: false}}
+              />
+            ) : (
+              <Tab.Screen
+                name="Home"
+                component={HomeScreen}
+                options={{
+                  tabBarIcon: ({focused}) => {
+                    if (focused) {
+                      return (
+                        <Image
+                          source={require('./assets/images/home.png')}
+                          resizeMode="contain"
+                          style={{width: '100%', height: '60%'}}
+                        />
+                      );
+                    }
                     return (
                       <Image
                         source={require('./assets/images/home.png')}
@@ -750,32 +1160,11 @@ const App = () => {
                         style={{width: '100%', height: '60%'}}
                       />
                     );
-                  }
-                  return (
-                    <Image
-                      source={require('./assets/images/home.png')}
-                      resizeMode="contain"
-                      style={{width: '100%', height: '60%'}}
-                    />
-                  );
-                },
-              }}
-            />
-            <Tab.Screen
-              name="Wallet"
-              component={WalletScreen}
-              options={{
-                tabBarIcon: () => {
-                  return (
-                    <Image
-                      source={require('./assets/images/wallet.png')}
-                      resizeMode="contain"
-                      style={{width: '100%', height: '60%'}}
-                    />
-                  );
-                },
-              }}
-            />
+                  },
+                }}
+              />
+            )}
+
             <Tab.Screen
               name="Circles"
               component={CircleScreen}
@@ -829,6 +1218,13 @@ const App = () => {
   );
 };
 
+const App = () => {
+  return (
+    <Provider store={store}>
+      <AppWrapper />
+    </Provider>
+  );
+};
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -836,12 +1232,12 @@ const styles = StyleSheet.create({
     backgroundColor: '#1C1C1C',
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 15,
     color: 'white',
   },

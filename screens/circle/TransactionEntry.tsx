@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/core';
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {
   SafeAreaView,
@@ -66,12 +66,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 14,
     color: 'white',
     textAlign: 'center',

@@ -34,7 +34,8 @@ export default WalletDashboard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1C1C1C',
+    paddingTop:30,
+    backgroundColor: '#0a0612',
   },
   bar: {
     width: '70%',
@@ -61,12 +62,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 14,
     color: 'white',
   },

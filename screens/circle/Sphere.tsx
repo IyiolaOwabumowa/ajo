@@ -1,4 +1,4 @@
-import {useNavigation} from '@react-navigation/core';
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect, useRef} from 'react';
 import {
   Animated,
@@ -16,20 +16,25 @@ import {
   TouchableHighlight,
   Image,
 } from 'react-native';
+import {useDispatch} from 'react-redux';
+import {circleActions} from '../../src/actions/circle.actions';
 import {Props, SphereProps} from '../../types';
 import BottomBar from '../BottomBar';
 
-const Sphere = ({id, title}: SphereProps) => {
+const Sphere = ({circle}: SphereProps) => {
   const navigation = useNavigation();
-
+  const dispatch = useDispatch();
   return (
     <TouchableOpacity
       onPress={() => {
-        navigation.navigate('CircleDashboard', {id: id, headerTitle: title});
+        dispatch(circleActions.activeCircle(circle));
+        navigation.navigate('CircleDashboard', {
+          headerTitle: circle.circlename,
+        });
       }}
       activeOpacity={0.7}
       style={[styles.container]}>
-      <Text style={styles.body}>{title}</Text>
+      <Text style={styles.body}>{circle.circlename}</Text>
     </TouchableOpacity>
   );
 };
@@ -40,9 +45,9 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: 'center',
     alignItems: 'center',
-    //borderColor: '#141414',
-    backgroundColor:"#0A3C25",
-    //borderWidth: 3,
+    borderColor: '#E2A8FE20',
+    backgroundColor: '#02000A',
+    borderWidth: 3,
     width: 127,
     height: 127,
     borderRadius: 100,
@@ -69,13 +74,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
-    fontSize: 14,
+    fontFamily: 'Axiforma-Medium',
+    fontSize: 12,
     color: 'white',
     textAlign: 'center',
     lineHeight: 25,

@@ -14,10 +14,22 @@ import {
   TouchableHighlight,
   Image,
 } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
+import { RootState } from '../../src/reducers';
 import {Props, SettingItemProps} from '../../types';
 import SettingItem from './SettingItem';
 
 const NotificationSettings = ({navigation, route}: Props) => {
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.authReducer.token);
+  const _id = useSelector((state: RootState) => state.authReducer.userId);
+  const profile = useSelector((state: RootState) => state.userReducer.profile);
+  const requesting = useSelector((state: RootState) => state.userReducer.requesting);
+  
+  useEffect(() => {
+    
+    
+  }, [])
   return (
     <View style={styles.container}>
       <View>
@@ -27,18 +39,18 @@ const NotificationSettings = ({navigation, route}: Props) => {
             {
               lineHeight: 25,
               textAlign: 'center',
-              color: '#ffffff30',
+              color: '#ffffff',
               paddingLeft: 30,
               paddingRight: 30,
               marginBottom: 30,
               marginTop: 30,
             },
           ]}>
-          We know. Sometimes, we also aren't in the mood for notifications
+          Sometimes, we hate notifications too!
         </Text>
 
-        <SettingItem title="Push Notifications" toggle={true} />
-        <SettingItem title="Do Not Disturb" toggle={true} />
+        <SettingItem title="Push Notifications" toggle={profile.settings.push} />
+        <SettingItem title="Do Not Disturb" toggle={profile.settings.dnd} />
       </View>
     </View>
   );
@@ -49,7 +61,7 @@ export default NotificationSettings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1C1C1C',
+    backgroundColor: '#0a0612',
   },
   transBar: {
     justifyContent: 'center',
@@ -88,12 +100,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 14,
     color: 'white',
   },

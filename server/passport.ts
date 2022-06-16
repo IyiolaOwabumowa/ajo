@@ -2,8 +2,9 @@ import {Request} from 'express';
 import {CallbackError} from 'mongoose';
 import passport from 'passport';
 import {Strategy as LocalStrategy} from 'passport-local';
-import {Strategy as JWTStrategy, VerifyCallback} from 'passport-jwt';
-import endpointsConfig from '../endpoints.config';
+import {Strategy as JWTStrategy} from 'passport-jwt';
+import {ExtractJwt} from 'passport-jwt';
+import endpointsConfig from './endpoints.config';
 import User from './models/User';
 import {IUser} from './types';
 
@@ -15,11 +16,11 @@ const cookieExtractor = (req: Request) => {
   return token;
 };
 
-//For authorization
+//For authorization (checking JWT validity)
 passport.use(
   new JWTStrategy(
     {
-      jwtFromRequest: cookieExtractor,
+      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: endpointsConfig.jwtSecret,
     },
     (payload, done) => {
@@ -28,17 +29,24 @@ passport.use(
         if (!user) return done(null, false);
         return done(null, user);
       });
+    
     },
   ),
 );
 
 //For authentication of users using username and password
 passport.use(
-  new LocalStrategy((email: string, password: string, done) => {
-    User.findOne({email}, (err: CallbackError, user: IUser) => {
-      if (err) return done(err);
-      if (!user) return done(null, false);
-      user.comparePasswords(password, done);
-    });
-  }),
+  new LocalStrategy(
+    {usernameField: 'email', passwordField: 'password'},
+    (email: string, password: string, done) => {
+      User.findOne({email}, (err: any, user: IUser) => {
+        if (err) return done(err);
+        if (!user) return done(null, false);
+        // if(user && !user.active){
+        //   return done(null, false);
+        // }
+        user.comparePasswords(password, done);
+      });
+    },
+  ),
 );

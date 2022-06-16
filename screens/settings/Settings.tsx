@@ -27,7 +27,7 @@ const Settings = ({navigation, route}: Props) => {
             {
               lineHeight: 25,
               textAlign: 'center',
-              color: '#ffffff30',
+              color: '#ffffff',
               paddingLeft: 30,
               paddingRight: 30,
               marginBottom: 30,
@@ -38,8 +38,9 @@ const Settings = ({navigation, route}: Props) => {
         </Text>
 
         <SettingItem title="Personal Information" next="PersonalInformation" />
-        <SettingItem title="Bank Account" next="BankAccount" />
-        <SettingItem title="Notifications" next="NotificationSettings" />
+        <SettingItem title="Bank Account" next="BankAccountSettings" />
+        <SettingItem title="Card Information" next="AddCardSettings" />
+        <SettingItem title="Notification Settings" next="NotificationSettings" />
         <SettingItem title={'Terms & Conditions'} next="TermsandConditions" />
         <SettingItem title={'Privacy Policy'} next="PrivacyPolicy" />
         <SettingItem title={'Change Password'} next="ChangePassword" />
@@ -54,7 +55,7 @@ export default Settings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1C1C1C',
+    backgroundColor: '#0a0612',
   },
   transBar: {
     justifyContent: 'center',
@@ -93,12 +94,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 14,
     color: 'white',
   },

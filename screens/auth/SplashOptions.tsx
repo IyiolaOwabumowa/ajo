@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {
   SafeAreaView,
@@ -11,10 +12,13 @@ import {
   Button,
   TouchableOpacity,
   TouchableHighlight,
+  Linking,
 } from 'react-native';
 import {Props} from '../../types';
 
-const SplashOptions: React.FC<Props> = ({navigation}) => {
+const SplashOptions: React.FC<Props> = ({route}: any) => {
+  const navigation = useNavigation();
+
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -30,11 +34,11 @@ const SplashOptions: React.FC<Props> = ({navigation}) => {
           }}>
           <TouchableOpacity
             onPress={() => {
-              navigation.navigate("Login")
+              navigation.navigate('Login');
             }}
             style={styles.button}
             activeOpacity={0.89}>
-            <Text style={[styles.body, {color: 'black'}]}>Log In</Text>
+            <Text style={[styles.body, {color: '#02000a'}]}>Log In</Text>
           </TouchableOpacity>
           <TouchableOpacity
             activeOpacity={0.8}
@@ -60,17 +64,17 @@ const styles = StyleSheet.create({
     backgroundColor: '#1C1C1C',
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 15,
     color: 'white',
   },
   button: {
-    backgroundColor: 'white',
+    backgroundColor: '#E2A8FE',
     width: '80%',
     height: 50,
     justifyContent: 'center',

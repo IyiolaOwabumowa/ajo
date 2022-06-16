@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -18,13 +18,47 @@ import {Props} from '../../types';
 import SlideUp from '../settings/SlideUp';
 import SettingItem from '../settings/SettingItem';
 import TransactionItem from './TransactionItem';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../src/reducers';
+import {separator} from '../../src/helpers/helpers';
 
 const Transactions = ({navigation, route}: Props) => {
-  console.log(route?.params);
+  const dispatch = useDispatch();
+  const token = useSelector(state => state.authReducer.token);
+  const _id = useSelector((state: RootState) => state.authReducer.userId);
+  const profile = useSelector((state: RootState) => state.userReducer.profile);
+  const wallet = useSelector((state: RootState) => state.walletReducer.wallet);
+  const requesting = useSelector(
+    (state: RootState) => state.userReducer.requesting,
+  );
+
+  const [searchTerm, setSearchTerm] = useState('');
+  const [filteredTransactions, setFilteredTransactions] = useState({
+    debit: [],
+    credit: [],
+  });
+  const [transactions, setTransactions] = useState<object[]>([]);
+
+  useEffect(() => {
+    const unsortedTransactions = [
+      ...wallet.transactions.debit,
+      ...wallet.transactions.credit,
+    ];
+
+    const sortedTransactions = unsortedTransactions
+      .filter(transaction =>
+        transaction.name.toLowerCase().includes(searchTerm),
+      )
+      .sort((a: any, b: any) => new Date(b.createdAt) - new Date(a.createdAt));
+    console.log(unsortedTransactions);
+
+    setTransactions([...sortedTransactions]);
+  }, [searchTerm]);
+
   return (
     <View style={styles.container}>
-      <View style={{marginTop: 30}}></View>
-      <Text
+      <View style={{marginTop: 0}}></View>
+      {/* <Text
         style={[
           styles.body,
           {
@@ -35,33 +69,74 @@ const Transactions = ({navigation, route}: Props) => {
             marginBottom: 30,
           },
         ]}>
-        Here's where you'll see transactions that have happened in your ajo account
-      </Text>
+        Here's where you'll see transactions that have happened on your ajo
+        account
+      </Text> */}
       <TextInput
         style={[styles.input, styles.body]}
-        placeholder="Search for a circle name"
-        placeholderTextColor="#ffffff60"
+        placeholder="Type a circle name"
+        placeholderTextColor="#ffffff"
+        value={searchTerm}
+        onChangeText={text => {
+          setSearchTerm(text.toLowerCase());
+        }}
       />
-      <TransactionItem
-        amount={-20000}
-        circle="PEPSI Board"
-        dateTime="28/03/2021    12:01"
-      />
-      <TransactionItem
-        amount={20000}
-        circle="Olatunde Family"
-        dateTime="28/03/2021    12:01"
-      />
-      <TransactionItem
-        amount={40000}
-        circle="Owabumowa Family"
-        dateTime="28/03/2021    12:01"
-      />
-      <TransactionItem
-        amount={600}
-        circle="Tunde Family"
-        dateTime="28/03/2021    12:01"
-      />
+      {transactions.length == 0 ? (
+        <Text
+          style={[
+            styles.body,
+            {
+              lineHeight: 25,
+              textAlign: 'center',
+              color: '#ffffff',
+
+              marginBottom: 30,
+            },
+          ]}>
+          No results!
+        </Text>
+      ) : (
+        <>
+          <ScrollView>
+            {transactions.map((transaction: any) => {
+              return (
+                <TransactionItem
+                  amount={separator(transaction.amount)}
+                  debit={wallet.transactions.debit.some(
+                    (object: any) =>
+                      object._id.toString() === transaction._id.toString(),
+                  )}
+                  initiator={transaction.initiator}
+                  key={transaction._id}
+                  name={
+                    transaction.initiator == 'user'
+                      ? 'Ajo (Card Verification Reversal)'
+                      : transaction.name
+                  }
+                  dateTime={transaction.createdAt}
+                />
+              );
+            })}
+
+            {/* {filteredTransactions.credit.map((creditTransaction: any) => {
+              return (
+                <TransactionItem
+                  amount={separator(creditTransaction.amount)}
+                  debit={false}
+                  initiator={creditTransaction.initiator}
+                  key={creditTransaction._id}
+                  name={'From: ' + creditTransaction.name}
+                  dateTime={
+                    creditTransaction.createdAt.slice(0, 10) +
+                    ' at ' +
+                    creditTransaction.createdAt.slice(11, 16)
+                  }
+                />
+              );
+            })} */}
+          </ScrollView>
+        </>
+      )}
     </View>
   );
 };
@@ -71,7 +146,7 @@ export default Transactions;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1C1C1C',
+    backgroundColor: '#0a0612',
     padding: 10,
   },
   transBar: {
@@ -102,7 +177,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    backgroundColor: '#2E2E2E',
+    backgroundColor: '#E2A8FE20',
     height: 53,
     marginTop: 10,
     marginBottom: 30,
@@ -111,12 +186,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 14,
     color: '#ffffff',
   },

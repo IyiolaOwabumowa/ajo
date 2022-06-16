@@ -21,7 +21,7 @@ import WalletBar from './WalletBar';
 const Withdraw = ({navigation, route}: Props) => {
   return (
     <View style={styles.container}>
-      <WalletBar balance={20000} />
+      {/* <WalletBar balance={20000} /> */}
       <View style={{padding: 20}}>
         <Text style={[styles.body]}>Amount</Text>
         <TextInput
@@ -32,14 +32,16 @@ const Withdraw = ({navigation, route}: Props) => {
         <TouchableOpacity
           activeOpacity={0.89}
           style={{
-            backgroundColor: '#0A3C25',
-            height: 58,
+            backgroundColor: '#E2A8FE',
+            height: 53,
             borderRadius: 3,
 
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <Text style={styles.body}>Withdraw to Bank</Text>
+          <Text style={[styles.body, {color: '#02000A'}]}>
+            Withdraw to Bank
+          </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -51,7 +53,7 @@ export default Withdraw;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1C1C1C',
+    backgroundColor: '#0a0612',
   },
   bar: {
     width: '100%',
@@ -69,7 +71,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    backgroundColor: '#2E2E2E',
+    backgroundColor: '#E2A8FE20',
     height: 53,
     marginTop: 10,
     marginBottom: 30,
@@ -78,12 +80,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 14,
     color: 'white',
   },

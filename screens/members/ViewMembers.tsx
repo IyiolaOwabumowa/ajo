@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {
   SafeAreaView,
   ScrollView,
@@ -13,22 +13,167 @@ import {
   TouchableOpacity,
   TouchableHighlight,
   Image,
+  Alert,
+  ActivityIndicator,
 } from 'react-native';
 import {Props} from '../../types';
 import SlideUp from '../settings/SlideUp';
 import SettingItem from '../settings/SettingItem';
+import {useDispatch, useSelector} from 'react-redux';
+import {RootState} from '../../src/reducers';
+import axios from 'axios';
+import Config from 'react-native-config';
+import {Members} from '../../server/types';
+import { circleActions } from '../../src/actions/circle.actions';
 
 const ViewMembers = ({navigation, route}: Props) => {
-  console.log(route?.params);
+  const dispatch = useDispatch();
+  const token = useSelector((state: RootState) => state.authReducer.token);
+  const _id = useSelector((state: RootState) => state.authReducer.userId);
+  const profile = useSelector((state: RootState) => state.userReducer.profile);
+  const active = useSelector((state: RootState) => state.circleReducer.active);
+
+  const wallet = useSelector((state: RootState) => state.walletReducer.wallet);
+  const circles = useSelector(
+    (state: RootState) => state.circleReducer.circles,
+  );
+
+  const [name, setName] = useState('');
+  const [loading, setLoading] = useState(true);
+  const membersArray = useRef<any>([]).current;
+
+  const [owner, setOwner] = useState(false);
+
+  useEffect(() => {
+    setOwner(active._creator?.toString() === profile._id?.toString());
+  }, []);
+  //@ts-ignore
+  const {members} = route?.params;
+
+  useEffect(() => {
+    const promises = active.members.map((member: Members) => {
+      return axios
+        .get(`${Config.API_URL}/api/users/${member._id}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then(response => {
+          // setName(
+          //   `${response.data.user.firstname} ${response.data.user.lastname}`,
+          // );
+
+          return {
+            _id: member._id,
+            firstname: response.data.user.firstname,
+            lastname: response.data.user.lastname,
+            deactivated: member.deactivated,
+            walletId: member.walletId,
+            paid: member.paid,
+            trials: member.trials,
+            warnings: member.warnings,
+          };
+        })
+        .catch(function (error) {
+          if (error.response) {
+            const errorObject = {
+              status: error.response.status,
+              error: error.response,
+            };
+            return errorObject;
+          }
+        });
+    });
+
+    Promise.all(promises).then(results => {
+      membersArray.push(...results);
+      setLoading(false);
+    });
+  }, []);
+
+  const deactivateMember = async (_id: any, circleId: any, name: any) => {
+    return axios
+      .get(`${Config.API_URL}/api/circles/deactivate/${circleId}/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        Alert.alert(
+          `Deactived!`,
+          `You can decide to activate ${name} in this circle.`,
+        );
+        dispatch(circleActions.generateCircles(token, profile.circles, active));
+
+      })
+      .catch(function (error) {
+        if (error.response) {
+          const errorObject = {
+            status: error.response.status,
+            error: error.response.message.body,
+          };
+          return errorObject;
+        }
+      });
+  };
+
+  const activateMember = async (_id: any, circleId: any, name: any) => {
+    return axios
+      .get(`${Config.API_URL}/api/circles/activate/${circleId}/${_id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then(response => {
+        Alert.alert(
+          `Activated!`,
+          `You can decide to deactivate ${name} in this circle.`,
+        );
+        dispatch(circleActions.generateCircles(token, profile.circles, active));
+
+      })
+      .catch(function (error) {
+        if (error.response) {
+          const errorObject = {
+            status: error.response.status,
+            error: error.response.message.body,
+          };
+          return errorObject;
+        }
+      });
+  };
+
   return (
     <View style={styles.container}>
       <View style={{marginTop: 30}}></View>
-      <SettingItem title="Kamaru Alalade" member />
-      <SettingItem title="Funke Fash" member />
-      <SettingItem title="Funke Fash" member />
-      <SettingItem title="Funke Fash" member />
-      <SettingItem title="Funke Fash" member />
-      <SettingItem title="Funke Fash" member />
+      {!loading ? (
+        <>
+          <ScrollView style={styles.container}>
+            {membersArray.map((member: any) => {
+              console.log(member);
+              return (
+                <React.Fragment key={member._id}>
+                  <SettingItem
+                    key={member._id}
+                    title={`${member.firstname} ${member.lastname}`}
+                    member={member}
+                    owner={owner}
+                    deactivated={member.deactivated}
+                    action={
+                      member.deactivated ? activateMember : deactivateMember
+                    }
+                    circle={active}
+                  />
+                </React.Fragment>
+              );
+            })}
+          </ScrollView>
+        </>
+      ) : (
+        <>
+          <ActivityIndicator size={'large'} color={'white'} />
+        </>
+      )}
     </View>
   );
 };
@@ -38,7 +183,7 @@ export default ViewMembers;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#1C1C1C',
+    backgroundColor: '#0a0612',
   },
   transBar: {
     justifyContent: 'center',
@@ -77,12 +222,12 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 14,
     color: 'white',
   },

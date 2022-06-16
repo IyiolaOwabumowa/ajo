@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, {useEffect} from 'react';
 import {
   SafeAreaView,
@@ -16,15 +17,16 @@ import {
 } from 'react-native';
 import {Props, SettingItemProps} from '../../types';
 
-const NotificationItem = () => {
+const NotificationItem = ({title, content, day}: any) => {
   return (
     <View style={styles.container}>
       <View style={{width: '70%'}}>
-        <Text style={[styles.body, {lineHeight: 20}]}>
-          We’ve made an update to our app and fixed the payment gateways
-        </Text>
+        <Text style={[styles.body, {lineHeight: 20, fontWeight:"bold"}]}>{title}</Text>
+        <Text style={[styles.body, {lineHeight: 20, marginTop:20, color:"white"}]}>{content}</Text>
       </View>
-      <Text style={[styles.body, {lineHeight: 20}]}>10d ago</Text>
+      <Text style={[styles.body, {lineHeight: 20}]}>
+        {moment(day).fromNow()}
+      </Text>
     </View>
   );
 };
@@ -35,10 +37,10 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#141414',
-    borderRadius:5,
+    backgroundColor: '#02000A',
+    borderRadius: 5,
     padding: 20,
-    marginBottom:20
+    marginBottom: 20,
   },
   transBar: {
     justifyContent: 'center',
@@ -77,13 +79,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 12,
-    color: 'white',
+    color: '#E2A8FE',
   },
 });

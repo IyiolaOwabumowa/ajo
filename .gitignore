@@ -56,7 +56,7 @@ buck-out/
 *.jsbundle
 
 #remove our env file
-.env
+# .env
 
 # CocoaPods
 /ios/Pods/

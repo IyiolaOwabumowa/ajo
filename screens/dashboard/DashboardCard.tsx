@@ -1,3 +1,4 @@
+import {useNavigation} from '@react-navigation/native';
 import React, {useEffect} from 'react';
 import {
   SafeAreaView,
@@ -16,17 +17,124 @@ import {
 } from 'react-native';
 import {DashCardProps} from '../../types';
 
-const DashboardCard = ({title, subtitle, value}: DashCardProps) => {
+const DashboardCard = ({
+  title,
+  subtitle,
+  value,
+  wallet,
+  slug,
+}: DashCardProps) => {
+  const navigation = useNavigation();
   return (
-    <View style={styles.container}>
-      <Text style={styles.body}>{title}</Text>
-      <Text style={[styles.body, {fontSize: 12, marginTop: 8}]}>
-        {subtitle}
-      </Text>
-      <Text style={[styles.header, {fontSize: 23, marginTop: 40}]}>
+    <TouchableOpacity
+      activeOpacity={slug ? 0.9 : 1}
+      onPress={() => {
+        if (slug == 'card') {
+          navigation.navigate('AddCard');
+        }
+        if (slug == 'bank') {
+          navigation.navigate('BankAccount');
+        }
+      }}
+      style={[
+        styles.container,
+        {
+          justifyContent: 'center',
+          backgroundColor: wallet ? '#9e5096' : '#733a78',
+          width: '49%',
+          height: wallet ? 150 : 150,
+          borderRadius: 3,
+        },
+      ]}>
+      {!wallet && (
+        <Text
+          style={[
+            styles.body,
+            {
+              fontSize: wallet ? 15 : 15,
+              marginTop: 8,
+              marginBottom: wallet ? 10 : 0,
+              color: wallet ? '#fff' : '#fff',
+              fontFamily: 'Axiforma-Medium',
+            },
+          ]}>
+          {title}
+        </Text>
+      )}
+
+      {slug == 'card' && (
+        <Image
+          source={require('../../assets/images/credit-card.png')}
+          resizeMode="contain"
+          style={{width: '30%', height: '30%'}}
+        />
+      )}
+      {slug == 'bank' && (
+        <Image
+          source={require('../../assets/images/bank.png')}
+          resizeMode="contain"
+          style={{width: '30%', height: '30%'}}
+        />
+      )}
+
+      <Text
+        style={[
+          styles.header,
+          {
+            fontSize: wallet ? 14 : 20,
+            marginTop: wallet ? 10 : 0,
+            color: wallet ? '#fff' : '#fff',
+            lineHeight: wallet ? 18 : 40,
+            fontFamily: 'Axiforma-Medium',
+          },
+        ]}>
         {value}
+        {wallet &&
+        wallet.bankdetails.authorization != null &&
+        slug == 'card' ? (
+          <Text
+            style={[
+              styles.header,
+              {
+                textDecorationLine:"underline",
+                textDecorationStyle:"dotted",
+                fontSize: wallet ? 14 : 20,
+                marginTop: wallet ? 10 : 0,
+                color: wallet ? '#000' : '#000',
+                lineHeight: wallet ? 18 : 40,
+                fontFamily: 'Axiforma-Medium',
+              },
+            ]}>
+            {'\n\n'}Change {slug}?
+          </Text>
+        ) : (
+          <></>
+        )}
+
+        {wallet &&
+        wallet.bankdetails.accountnumber != null &&
+        slug == 'bank' ? (
+          <Text
+            style={[
+              styles.header,
+              {
+                textDecorationLine:"underline",
+                textDecorationStyle:"dotted",
+                fontSize: wallet ? 14 : 20,
+                marginTop: wallet ? 10 : 0,
+                color: wallet ? '#000' : '#000',
+                lineHeight: wallet ? 18 : 40,
+                fontFamily: 'Axiforma-Medium',
+                
+              },
+            ]}>
+            {'\n\n'}Change {slug}?
+          </Text>
+        ) : (
+          <></>
+        )}
       </Text>
-    </View>
+    </TouchableOpacity>
   );
 };
 
@@ -36,8 +144,8 @@ const styles = StyleSheet.create({
   container: {
     height: 158,
     borderRadius: 10,
-    marginTop: 20,
-    backgroundColor: '#272727',
+    marginTop: 8,
+    backgroundColor: '#02fffA',
     padding: 20,
     width: '100%',
   },
@@ -58,13 +166,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: 'white',
+    color: '#E2A8FE',
   },
 });

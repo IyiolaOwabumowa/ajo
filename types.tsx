@@ -5,6 +5,7 @@ import {
   RouteProp,
 } from '@react-navigation/native';
 import {BottomTabNavigationProp} from '@react-navigation/bottom-tabs';
+import {ICircle, Members} from './server/types';
 
 export type StackParamList = {
   Login: undefined;
@@ -56,26 +57,40 @@ export interface DashCardProps {
   title: string;
   subtitle: string;
   value: string | number;
+  wallet?: boolean
 }
 
 export interface SphereProps {
   title: string;
   id: string;
+  circle: ICircle;
 }
 
 export interface SettingItemProps {
   title: string;
   toggle?: boolean;
   deletable?: boolean;
-  member?: boolean;
+  member?: Members;
   next?: string;
   params?: object;
+  deactivated?: boolean;
+  debtors?: boolean;
+  paused?: boolean;
+  action?: (
+    _id: any,
+    circleId: any,
+    name: any,
+  ) => Promise<void | {status: any; error: any} | undefined>;
+  owner?: boolean;
+  circle?: Members;
 }
 
 export interface UserSearchEntryProps {
-  id: number;
+  id: string;
   name: string;
   email: string;
+  invitedMomentsAgo: boolean;
+  storeInvite: (id: string) => void;
 }
 
 export interface WalletBarProps {
@@ -84,6 +99,8 @@ export interface WalletBarProps {
 
 export interface TransactionItemProps {
   dateTime: string;
-  circle: string;
-  amount: number;
+  initiator: string;
+  debit: boolean;
+  name: string;
+  amount: string;
 }

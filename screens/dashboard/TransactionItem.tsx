@@ -17,15 +17,38 @@ import {
 import {Props, TransactionItemProps, UserSearchEntryProps} from '../../types';
 import SlideUp from '../settings/SlideUp';
 import SettingItem from '../settings/SettingItem';
+import moment from 'moment';
 
-const TransactionItem = ({dateTime, circle, amount}: TransactionItemProps) => {
+const TransactionItem = ({
+  dateTime,
+  debit,
+  initiator,
+  name,
+  amount,
+}: TransactionItemProps) => {
   return (
-    <View style={styles.container}>
+    <View style={debit ? styles.debit : styles.credit}>
       <View>
-        <Text style={[styles.body, {marginBottom: 10}]}>{dateTime}</Text>
-        <Text style={styles.body}>{circle} </Text>
+        <View
+          style={{
+            backgroundColor: '#00000020',
+            padding: 5,
+            borderRadius: 5,
+            marginBottom: 10,
+          }}>
+          <Text style={[styles.body, {color: debit ? 'white' : 'white'}]}>
+            {moment(dateTime).format('llll')}
+          </Text>
+        </View>
+        <Text style={[styles.body, {color: debit ? 'white' : 'white',fontWeight: '200', fontSize: 15}]}>
+         {debit ? "Debited by" : "Credited by"} {name}{' '}
+        </Text>
       </View>
-      <Text style={styles.body}> ${amount}</Text>
+      <Text style={[styles.body, {color: debit ? 'white' : 'white', fontWeight:"700"}]}>
+        {' '}
+      
+        ₦{amount}
+      </Text>
     </View>
   );
 };
@@ -33,14 +56,23 @@ const TransactionItem = ({dateTime, circle, amount}: TransactionItemProps) => {
 export default TransactionItem;
 
 const styles = StyleSheet.create({
-  container: {
+  credit: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     borderRadius: 5,
-    backgroundColor: '#171717',
+    backgroundColor: '#0A3C25',
     padding: 15,
-    marginBottom: 15,
+    marginBottom: 25,
+  },
+  debit: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 5,
+    backgroundColor: '#8B0000',
+    padding: 15,
+    marginBottom: 25,
   },
   invite: {
     padding: 5,
@@ -85,13 +117,13 @@ const styles = StyleSheet.create({
     fontSize: 15,
   },
   header: {
-    fontFamily: 'Axiforma Heavy',
+    fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
     color: 'white',
   },
   body: {
-    fontFamily: 'Axiforma Medium',
+    fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: '#ffffff',
+    color: '#000000',
   },
 });
