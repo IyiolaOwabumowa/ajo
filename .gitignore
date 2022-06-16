@@ -60,3 +60,7 @@ buck-out/
 
 # CocoaPods
 /ios/Pods/
+
+.env
+ajo-f1b9b-firebase-adminsdk-dgjl0-58d38b8923.json
+node-modules
