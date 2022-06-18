@@ -28,7 +28,7 @@ const registerUser = async (req: Request, res: Response) => {
       await user.save();
       await wallet.save();
       // await sendEmail({
-      //   from: 'thefunnymail@ajo.io',
+      //   from: 'help@getajo.app',
       //   to: `${email}`,
       //   subject: `Confirm your ajo account`,
       //   templateName: 'confirm-account',
@@ -132,7 +132,7 @@ const triggerReset = async (req: Request, res: Response) => {
     if (user) {
       const token = signToken(user!._id);
       await sendEmail({
-        from: 'thefunnymail@ajo.io',
+        from: 'help@getajo.app',
         to: `${email}`,
         subject: `Here's a link to reset your password - Ajo`,
         templateName: 'reset-password',

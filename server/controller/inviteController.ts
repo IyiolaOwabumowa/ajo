@@ -94,7 +94,7 @@ const sendInvite = async (req: Request, res: Response) => {
             const inviteLink = `ajo://app/invite/${authToken}/${circle._id}/${user._id}`;
             console.log(inviteLink)
             const sent = await sendEmail({
-              from: 'thefunnymail@ajo.io',
+              from: 'help@getajo.app',
               to: `${user.email}`,
               subject: `${firstname} ${lastname} (Ajo Circle Invite)`,
               templateName: 'invite',
