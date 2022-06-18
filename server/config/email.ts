@@ -27,16 +27,15 @@ export default ({templateName, templateVars, ...restOfOptions}: any) => {
     const smtp = nodemailer.createTransport({
       host: endpointsConfig.smtpHost,
       port: Number(endpointsConfig.smtpPort),
-      secure: endpointsConfig.nodeEnv !== 'development',
+      secure: false,
       auth: {
         user: endpointsConfig.smtpUsername,
         pass: endpointsConfig.smtpPassword,
       },
       requireTLS: true,
       tls: {
-        minVersion: 'TLSv1', // -> This is the line that solved my problem
-        rejectUnauthorized: false,
-    },
+        ciphers:'SSLv3'
+    }
     });
 
     return smtp.sendMail(options);
