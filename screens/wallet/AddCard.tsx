@@ -51,14 +51,25 @@ const AddCard = () => {
 
   useEffect(() => {
     if (profile) {
+      // setForm({
+      //   amountInKobo: '5000',
+      //   cardNumber: '',
+      //   expiryMonth: '',
+      //   expiryYear: '',
+      //   cvc: '',
+      //   email: profile.email,
+      // });
+
       setForm({
         amountInKobo: '5000',
-        cardNumber: '',
-        expiryMonth: '',
-        expiryYear: '',
-        cvc: '',
+        cardNumber: '4084084084084081',
+        expiryMonth: '06',
+        expiryYear: '23',
+        cvc: '408',
         email: profile.email,
       });
+
+      
     }
   }, []);
 

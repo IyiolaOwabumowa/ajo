@@ -29,7 +29,7 @@ const Login: React.FC<Props> = ({route, navigation}) => {
     (state: RootState) => state.authReducer.loggingIn,
   );
 
-  const [form, setForm] = useState<Object>({email: '', password: ''});
+  const [form, setForm] = useState<Object>({email: 'demo@gmail.com', password: 'demo'});
   const [error, setError] = useState<String | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
 
@@ -115,7 +115,7 @@ const Login: React.FC<Props> = ({route, navigation}) => {
           <Text
             style={[
               styles.body,
-              {marginBottom: 30, color: '#E2A8FE', marginTop: 20},
+              {marginBottom: 30, color: '#E2A8FE', marginTop: 20, lineHeight:23},
             ]}>
             {error}
           </Text>

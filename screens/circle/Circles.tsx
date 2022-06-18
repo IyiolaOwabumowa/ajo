@@ -68,7 +68,6 @@ const Circles = () => {
         .then(response => {
           setProfile(response.data.user);
           dispatch(
-
             circleActions.generateCircles(token, response.data.user.circles),
           );
           setDisplayCircles(true);
@@ -146,23 +145,19 @@ const Circles = () => {
             <View
               style={{
                 flex: 1,
-                justifyContent: 'center',
-                flexDirection: 'row',
-                flexWrap: 'wrap',
-                width: '100%',
+                margin:10,
               }}>
               {circles?.length != 0 ? (
                 <>
                   {circles?.map((circle: ICircle) => {
                     return (
-                      <Animated.View
+                      <View
                         key={circle._id}
                         style={[
                           styles.container,
                           {
                             padding: 5,
                             marginBottom: 10,
-                            transform: [{translateY: valueY}],
                           },
                         ]}>
                         <Sphere
@@ -170,7 +165,7 @@ const Circles = () => {
                           id={circle._id}
                           circle={circle}
                         />
-                      </Animated.View>
+                      </View>
                     );
                   })}
                 </>

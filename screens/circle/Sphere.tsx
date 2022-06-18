@@ -35,6 +35,11 @@ const Sphere = ({circle}: SphereProps) => {
       activeOpacity={0.7}
       style={[styles.container]}>
       <Text style={styles.body}>{circle.circlename}</Text>
+      <Image
+            source={require('../../assets/images/forward-arrow.png')}
+            resizeMode="contain"
+            style={{width: '2%'}}
+          />
     </TouchableOpacity>
   );
 };
@@ -43,15 +48,17 @@ export default Sphere;
 
 const styles = StyleSheet.create({
   container: {
-    justifyContent: 'center',
+    backgroundColor: '#E2A8FE20',
+    paddingLeft: 20,
+    paddingTop: 0,
+    paddingRight: 20,
+    height: 60,
+    marginBottom: 40,
+    borderRadius:80,
+    width: '100%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    borderColor: '#E2A8FE20',
-    backgroundColor: '#02000A',
-    borderWidth: 3,
-    width: 127,
-    height: 127,
-    borderRadius: 100,
-    padding: 10,
   },
   center: {
     flex: 1,
@@ -80,7 +87,7 @@ const styles = StyleSheet.create({
   },
   body: {
     fontFamily: 'Axiforma-Medium',
-    fontSize: 12,
+    fontSize: 14,
     color: 'white',
     textAlign: 'center',
     lineHeight: 25,

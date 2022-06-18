@@ -48,10 +48,15 @@ const PersonalInformation = () => {
   );
 
   const [form, setForm] = useState<IPersonal>({
-    firstname: '',
-    lastname: '',
-    dob: new Date(),
-    occupation: '',
+    firstname: 'Demo',
+    lastname: 'Demo',
+    dob: new Date("1970-01-01T00:00:00.018+00:00"),
+    occupation: 'Demo',
+
+    // firstname: '',
+    // lastname: '',
+    // dob: new Date(""),
+    // occupation: '',
   });
   const [open, setOpen] = useState(false);
   const [date, setDate] = useState(new Date());
@@ -62,12 +67,12 @@ const PersonalInformation = () => {
   useEffect(() => {
     if (profile) {
       setForm({
-        firstname: profile.firstname ? profile.firstname : '',
-        lastname: profile.lastname ? profile.lastname : '',
-        dob: profile.dob?.length > 0 ? new Date(profile.dob) : new Date(),
+        firstname: profile.firstname ? profile.firstname : form.firstname,
+        lastname: profile.lastname ? profile.lastname : form.lastname,
+        dob: profile.dob?.length > 0 ? new Date(profile.dob) : form.dob,
         occupation: profile.occupation
           ? profile.occupation
-          : profile.occupation,
+          : form.occupation,
       });
     }
   }, []);

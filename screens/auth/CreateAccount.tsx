@@ -27,11 +27,13 @@ import Welcome from './Welcome';
 
 const CreateAccount = () => {
   const [form, setForm] = useState<Object>({
+  
+
     deviceId: '999',
     username: '',
     email: '',
     password: '',
-    phone: '',
+    phone: '0000000000000',
   });
 
   const dispatch = useDispatch();
@@ -85,6 +87,7 @@ const CreateAccount = () => {
         placeholderTextColor="#ffffff60"
         autoCapitalize="none"
         autoCorrect={false}
+        value={form.username}
         onChangeText={text => {
           setForm({...form, username: text.trim().toLowerCase()});
         }}
@@ -97,6 +100,7 @@ const CreateAccount = () => {
         placeholderTextColor="#ffffff60"
         keyboardType="email-address"
         autoCapitalize="none"
+        value={form.email}
         onChangeText={text => {
           setForm({...form, email: text});
         }}

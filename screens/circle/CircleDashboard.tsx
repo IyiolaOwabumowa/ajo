@@ -193,7 +193,7 @@ const CircleDashboard = ({route}: Props) => {
           style={{
             justifyContent: 'center',
             alignItems: 'flex-start',
-            backgroundColor: '#E2A8FE',
+            backgroundColor: '#733a78',
             paddingLeft: 20,
             marginTop: 40,
             height: 165,
@@ -267,7 +267,7 @@ const CircleDashboard = ({route}: Props) => {
                     <Text
                       style={[
                         styles.header,
-                        {textAlign: 'center', fontSize: 15, lineHeight: 30},
+                        {textAlign: 'center', fontSize: 16, lineHeight: 30},
                       ]}>
                       This ajo hasn't started
                     </Text>
@@ -280,7 +280,7 @@ const CircleDashboard = ({route}: Props) => {
               style={{
                 alignItems: 'center',
                 justifyContent: 'center',
-                backgroundColor: '#02000A',
+                backgroundColor: '#733a78',
                 borderBottomLeftRadius: 3,
                 borderBottomRightRadius: 3,
                 width: '100%',
@@ -301,15 +301,15 @@ const CircleDashboard = ({route}: Props) => {
 
               {active.round.count - 1 == active.capacity ? (
                 <>
-                  <Text style={[styles.body, {fontSize: 13}]}>
-                    The owner of this circle can decide to restart this ajo
+                  <Text style={[styles.body, {color: "white", fontSize: 15}]}>
+                    Circle owner can decide to restart this ajo
                   </Text>
                 </>
               ) : (
                 <>
                   {!active.started ? (
-                    <Text style={[styles.body, {fontSize: 13}]}>
-                      The owner of this circle can decide to start this ajo
+                    <Text style={[styles.body, {color: "white", fontSize: 15}]}>
+                      Circle owner can decide to start this ajo
                     </Text>
                   ) : (
                     <>
@@ -440,23 +440,23 @@ const CircleDashboard = ({route}: Props) => {
                   styles.transBar,
                   {
                     alignItems: 'center',
-                    backgroundColor: '#02000a',
-                    marginTop: 20,
+                    backgroundColor: '#733a78',
+                    marginTop: 50,
                     marginBottom: 0,
                   },
                 ]}>
                 {loading ? (
                   <>
-                    <ActivityIndicator color={'white'} size="large" />
+                    <ActivityIndicator color={'white'} size="small" />
                   </>
                 ) : (
                   <>
                     <Text
                       style={[
                         styles.body,
-                        {fontSize: 13, textAlign: 'center', color: '#E2A8FE'},
+                        {fontSize: 15, textAlign: 'center', color: '#fff'},
                       ]}>
-                      Click to start this ajo
+                      Start Ajo
                     </Text>
                   </>
                 )}
@@ -656,7 +656,7 @@ const styles = StyleSheet.create({
     width: '90%',
     borderRadius: 5,
     backgroundColor: '#00000020',
-    height: 60,
+    height: 50,
     marginTop: 20,
 
     paddingLeft: 20,

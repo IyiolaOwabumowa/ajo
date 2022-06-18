@@ -1,4 +1,5 @@
 import React, {useEffect} from 'react';
+import { enableScreens } from 'react-native-screens';
 import {
   SafeAreaView,
   ScrollView,
@@ -116,6 +117,12 @@ const AppWrapper = () => {
       storageBucket: 'ajo-f1b9b.appspot.com',
     });
   }
+
+  React.useEffect(() => {
+    if (Platform.OS === "ios") {
+      enableScreens(false);
+    }
+  }, []);
   useEffect(() => {
     if (token) {
       const registerToken = (tkn: any) => {
@@ -1093,6 +1100,8 @@ const AppWrapper = () => {
   };
 
   return (
+    <View style={{flex: 1, backgroundColor:"#0a0612"}}>
+
     <NavigationContainer theme={DarkTheme} linking={linking}>
       <Tab.Navigator
         tabBarOptions={{
@@ -1104,24 +1113,24 @@ const AppWrapper = () => {
 
 
           tabStyle: {
-           paddingBottom: 15,
-           paddingTop: 10,
-       
-            // marginRight: 20,
-            // borderRadius: 40,
+           paddingBottom: 1,
+           paddingTop: 0,
+            marginBottom:20,
+            marginRight: 20,
+             borderRadius: 5,
           },
           // inactiveBackgroundColor: '#b55031',
           labelStyle: {
-            fontSize: 12,
+            fontSize: 13,
             color:"white",
-            marginBottom:20
+            marginBottom:10
           },
           style: {
             backgroundColor: '#0a0612',
             borderTopColor: '#ffffff00',
             paddingTop: 8,
-            paddingBottom:2,
-            height:110
+            paddingBottom:0,
+            height:90, 
           },
         }}>
         {!profile == true ? (
@@ -1136,7 +1145,9 @@ const AppWrapper = () => {
               <Tab.Screen
                 name="OnBoardingScreen"
                 component={OnBoardingScreen}
-                options={{tabBarVisible: false}}
+                options={{
+
+                  tabBarVisible: false}}
               />
             ) : (
               <Tab.Screen
@@ -1181,7 +1192,7 @@ const AppWrapper = () => {
               }}
             />
             <Tab.Screen
-              name="Notifications"
+              name="Agogo"
               component={NotificationsScreen}
               options={{
                 tabBarBadge: 4,
@@ -1215,6 +1226,7 @@ const AppWrapper = () => {
         )}
       </Tab.Navigator>
     </NavigationContainer>
+    </View>
   );
 };
 

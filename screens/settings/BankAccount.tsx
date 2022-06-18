@@ -63,7 +63,7 @@ const BankAccount = () => {
       axios
         .get('https://api.paystack.co/bank?currency=NGN')
         .then(res => {
-          res.data.data.splice(0, 71).map((object: any) => {
+          res.data.data.splice(0, 90).map((object: any) => {
             banksForPicker.push({label: object.name, value: object.code});
           });
           setBanks(banksForPicker);
@@ -76,12 +76,26 @@ const BankAccount = () => {
 
   useEffect(() => {
     if (wallet && wallet.bankdetails) {
-      setBank(wallet.bankdetails.bankcode);
+      // change back to this after demo
+      // setBank(wallet.bankdetails.bankcode);
+      // setForm({
+      //   accountnumber: wallet.bankdetails.accountnumber,
+      //   recipientcode: wallet.bankdetails.recipientcode,
+      //   authorizationcode: wallet.bankdetails.authorizationcode,
+      // });
+
+      setBank("057");
       setForm({
-        accountnumber: wallet.bankdetails.accountnumber,
-        recipientcode: wallet.bankdetails.recipientcode,
+        accountnumber: "0000000000",
+        recipientcode: "RCP_u25dbpb45wajw94",
         authorizationcode: wallet.bankdetails.authorizationcode,
       });
+
+
+      // bankcode
+      // 
+      // accountnumber
+      // 
     }
   }, []);
 
