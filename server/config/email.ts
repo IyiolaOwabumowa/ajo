@@ -32,6 +32,11 @@ export default ({templateName, templateVars, ...restOfOptions}: any) => {
         user: endpointsConfig.smtpUsername,
         pass: endpointsConfig.smtpPassword,
       },
+      requireTLS: true,
+      tls: {
+        minVersion: 'TLSv1', // -> This is the line that solved my problem
+        rejectUnauthorized: false,
+    },
     });
 
     return smtp.sendMail(options);
