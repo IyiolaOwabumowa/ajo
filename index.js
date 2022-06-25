@@ -19,4 +19,4 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
   console.log('message is handled in the background', remoteMessage);
 });
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent("ajo", () => App);

@@ -27,7 +27,7 @@ const config = {
 };
 
 const linking = {
-  prefixes: ['ajo://app'],
+  prefixes: ['http://getajo.app', 'ajo://app'],
   config,
 };
 

@@ -4,6 +4,7 @@ import android.app.Application;
 import android.content.Context;
 import com.facebook.react.PackageList;
 import com.facebook.react.ReactApplication;
+import com.swmansion.reanimated.ReanimatedPackage;
 import com.rnfs.RNFSPackage;
 import com.henninghall.date_picker.DatePickerPackage;
 import com.reactnativecommunity.asyncstorage.AsyncStoragePackage;
