@@ -616,7 +616,7 @@ const startRoundDeductionsCron = async (circle: ICircle | null) => {
             ) {
               //tell each member they were debited here
               const sendToUser = await sendEmail({
-                from: 'help@getajo.app',
+                from: 'Ajo <help@getajo.app>',
                 to: `${mem?.email}`,
                 subject: `Payment Sucessful - ${
                   circle!.circlename
@@ -647,7 +647,7 @@ const startRoundDeductionsCron = async (circle: ICircle | null) => {
 
               if (sendToUser && mailList.length != 0) {
                 await sendEmail({
-                  from: 'help@getajo.app',
+                  from: 'Ajo <help@getajo.app>',
                   to: mailList,
                   subject: `Someone made a payment in ${
                     circle!.circlename
@@ -678,7 +678,7 @@ const startRoundDeductionsCron = async (circle: ICircle | null) => {
                 member.deactivated = true;
                 // circle = await circle!.save();
                 const sent = await sendEmail({
-                  from: 'help@getajo.app',
+                  from: 'Ajo <help@getajo.app>',
                   to: `${mem?.email}`,
                   subject: `${mem?.firstname}, you've been deactivated in [${
                     circle!.circlename
@@ -704,7 +704,7 @@ const startRoundDeductionsCron = async (circle: ICircle | null) => {
                 circle!.members[idx].trials = circle!.members[idx].trials + 1;
                 // await circle!.save();
                 const sent = await sendEmail({
-                  from: 'help@getajo.app',
+                  from: 'Ajo <help@getajo.app>',
                   to: `${mem?.email}`,
                   subject: `Insufficient funds [${circle!.circlename}]`,
                   templateName: 'warning',
@@ -781,7 +781,7 @@ const startNextRoundCron = async (circle: ICircle | null) => {
     await circle!.save();
 
     await sendEmail({
-      from: 'help@getajo.app',
+      from: 'Ajo <help@getajo.app>',
       to: list,
       subject: `Ajo Ended - ${circle!.circlename} circle`,
       templateName: 'ajo-ended',
@@ -837,7 +837,7 @@ const startNextRoundCron = async (circle: ICircle | null) => {
             circle!.round.lastRoundEndDate = new Date();
 
             const sentToUser = await sendEmail({
-              from: 'help@getajo.app',
+              from: 'Ajo <help@getajo.app>',
               to: `${member.email}`,
               subject: `You will soon be credited with ₦${fundingAmount} - ${
                 circle!.circlename
@@ -855,7 +855,7 @@ const startNextRoundCron = async (circle: ICircle | null) => {
 
             if (sentToUser && mailList.length != 0) {
               const sent = await sendEmail({
-                from: 'help@getajo.app',
+                from: 'Ajo <help@getajo.app>',
                 to: mailList,
                 subject: `${member.firstname} will be funded now - ${
                   circle!.circlename
