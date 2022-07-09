@@ -47,8 +47,9 @@ const ChangePassword = () => {
         <TextInput
           style={[styles.input, styles.body]}
           placeholder="Enter your current password"
-          placeholderTextColor="#ffffff60"
+          placeholderTextColor="#00000050"
           autoCapitalize="none"
+          autoCorrect={false}
           value={form.currentpassword}
           onChangeText={text => {
             setForm({...form, currentpassword: text});
@@ -58,8 +59,10 @@ const ChangePassword = () => {
         <TextInput
           style={[styles.input, styles.body]}
           placeholder="Enter your new password"
-          placeholderTextColor="#ffffff60"
+          placeholderTextColor="#00000050"
           autoCapitalize="none"
+          autoCorrect={false}
+          secureTextEntry={true}
           value={form.newpassword}
           onChangeText={text => {
             setForm({...form, newpassword: text});
@@ -69,7 +72,7 @@ const ChangePassword = () => {
           activeOpacity={0.89}
           style={{
             backgroundColor: '#E2A8FE',
-            height: 53,
+            height: 45,
             borderRadius: 3,
 
             justifyContent: 'center',
@@ -94,12 +97,12 @@ const ChangePassword = () => {
             <Text style={[styles.body, {color: "#02000A"}]}>Update</Text>
           )}
         </TouchableOpacity>
-        {error && <Text style={[styles.body, {marginTop: 30, color:"#E2A8FE"}]}>{error}</Text>}
+        {error && <Text style={[styles.body, {marginTop: 30, color:"red"}]}>{error}</Text>}
         {warning && (
-          <Text style={[styles.body, {marginTop: 30, color: "#E2A8FE"}]}>{warning}</Text>
+          <Text style={[styles.body, {marginTop: 30, color: "red"}]}>{warning}</Text>
         )}
         {message && (
-          <Text style={[styles.body, {marginTop: 30, color:"#E2A8FE"}]}>{message}</Text>
+          <Text style={[styles.body, {marginTop: 30, color:"red"}]}>{message}</Text>
         )}
       </View>
     </View>
@@ -111,7 +114,7 @@ export default ChangePassword;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   bar: {
     width: '100%',
@@ -145,6 +148,6 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: 'white',
+    color: 'black',
   },
 });

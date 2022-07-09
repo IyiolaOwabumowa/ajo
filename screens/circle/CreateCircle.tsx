@@ -32,7 +32,14 @@ const CreateCircle = () => {
   const circles = useSelector(
     (state: RootState) => state.circleReducer.circles,
   );
+  const circleError = useSelector((state: RootState) =>
+    state.circleReducer.circleError ? state.circleReducer.circleError : null,
+  );
   const active = useSelector((state: RootState) => state.circleReducer.active);
+  const successful = useSelector(
+    (state: RootState) => state.circleReducer.successful,
+  );
+
   const requesting = useSelector(
     (state: RootState) => state.circleReducer.requesting,
   );
@@ -45,24 +52,55 @@ const CreateCircle = () => {
   });
 
   const [error, setError] = useState(null);
+
+  const [created, setCreated] = useState(false);
+
+  useEffect(() => {
+    setError(circleError);
+  }, [circleError]);
+
+  useEffect(() => {
+    if (successful) {
+      setCreated(true);
+    }
+  }, [successful]);
+
+  useEffect(() => {
+    if (created) {
+      Alert.alert('Circle created successfully', '', [
+        {
+          text: 'Ok',
+          onPress: () => {
+            navigation.navigate('CircleDashboard');
+            setTimeout(() => {
+              setCreated(false);
+            }, 2000);
+          },
+        },
+      ]);
+    }
+  }, [created]);
+
   return (
     <View style={styles.container}>
-      <Text style={styles.body}>Name your circle</Text>
+      <Text style={[styles.body, {marginTop: 20}]}>Name your circle</Text>
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Circle Name"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000060"
         value={form.circlename}
         autoCorrect={false}
         onChangeText={text => {
           setForm({...form, circlename: text});
         }}
       />
-      <Text style={styles.body}>How many days should each round take?</Text>
+      <Text style={styles.body}>
+        How many days should each round take? (At least 7)
+      </Text>
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Enter number of days"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000060"
         value={form.roundDuration}
         keyboardType="number-pad"
         onChangeText={text => {
@@ -73,18 +111,18 @@ const CreateCircle = () => {
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Enter a fee"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000060"
         value={form.fee.toString()}
         keyboardType="number-pad"
         onChangeText={text => {
           setForm({...form, fee: text});
         }}
       />
-      <Text style={styles.body}>Maximum number of people in your ajo</Text>
+      <Text style={styles.body}>Number of people in your ajo (At least 2)</Text>
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Enter a number"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000060"
         value={form.capacity.toString()}
         keyboardType="number-pad"
         onChangeText={text => {
@@ -96,7 +134,7 @@ const CreateCircle = () => {
         activeOpacity={0.89}
         style={{
           backgroundColor: '#E2A8FE',
-          height: 53,
+          height: 45,
           borderRadius: 3,
 
           justifyContent: 'center',
@@ -113,24 +151,8 @@ const CreateCircle = () => {
             setTimeout(() => {
               // dispatch(userActions.getProfile(profile._id, token));
             }, 500);
-            navigation.navigate('CircleDashboard');
-            Alert.alert('Circle created successfully');
-            //  dispatch(circleActions.generateCircles(token, profile.circles))
-            // Alert.alert('Circle created successfully', '', [
-            //   {
-            //     text: 'Take me to my circle',
-            //     onPress: () => {
-            //       navigation.navigate('CircleDashboard');
-            //     },
-            //   },
-
-            //   {
-            //     text: 'cancel',
-            //     style:"cancel"
-            //   }
-            // ]);
           } else {
-            setError('Please make sure all fields are correct ');
+            setError('Please make sure all fields are correct');
             setTimeout(() => {
               setError(null);
             }, 4000);
@@ -139,7 +161,7 @@ const CreateCircle = () => {
         {requesting ? (
           <ActivityIndicator color={'#02000A'} size={'small'} />
         ) : (
-          <Text style={[styles.body, {color: '#02000A'}]}>Create</Text>
+          <Text style={[styles.body, {color: '#02000A'}]}>Create Circle</Text>
         )}
       </TouchableOpacity>
 
@@ -148,21 +170,21 @@ const CreateCircle = () => {
           <Text
             style={[
               styles.body,
-              {marginBottom: 30, color: '#E2A8FE', marginTop: 20},
+              {marginBottom: 30, color: 'red', marginTop: 20},
             ]}>
             {error}
           </Text>
         </>
       )}
 
-      <Text
+      {/* <Text
         style={[
           styles.body,
           {textAlign: 'left', marginTop: 40, lineHeight: 20, padding: 0},
         ]}>
         - Your circle should have at least 7 days per round.
         {'\n\n'}- Your circle should have at least 2 people.
-      </Text>
+      </Text> */}
     </View>
   );
 };
@@ -173,7 +195,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
     padding: 20,
   },
   row: {
@@ -201,6 +223,6 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: 'white',
+    color: '#000',
   },
 });

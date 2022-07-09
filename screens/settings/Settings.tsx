@@ -27,7 +27,7 @@ const Settings = ({navigation, route}: Props) => {
             {
               lineHeight: 25,
               textAlign: 'center',
-              color: '#ffffff',
+              color: '#000',
               paddingLeft: 30,
               paddingRight: 30,
               marginBottom: 30,
@@ -55,7 +55,7 @@ export default Settings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   transBar: {
     justifyContent: 'center',

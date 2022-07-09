@@ -81,13 +81,11 @@ const InviteMembers = ({navigation, route}: Props) => {
 
   return (
     <View style={styles.container}>
-      <View style={{marginTop: 30}}></View>
-
-      <View style={{alignItems: 'center'}}>
+      <View style={{alignItems: 'center', marginTop: -10}}>
         <TextInput
           style={[styles.input, styles.body]}
           placeholder="Search for a registered username"
-          placeholderTextColor="#ffffff"
+          placeholderTextColor="#00000070"
           value={termStore}
           autoCorrect={false}
           onChangeText={text => {
@@ -104,7 +102,7 @@ const InviteMembers = ({navigation, route}: Props) => {
               {
                 lineHeight: 25,
                 textAlign: 'center',
-                color: '#ffffff',
+                color: '#000',
 
                 marginBottom: 30,
               },
@@ -116,7 +114,9 @@ const InviteMembers = ({navigation, route}: Props) => {
       )}
 
       {loading ? (
-        <ActivityIndicator color={'white'} size="large" />
+        <View style={{marginTop: 30}}>
+          <ActivityIndicator color={'black'} size="large" />
+        </View>
       ) : (
         <ScrollView>
           {users.length > 0
@@ -139,9 +139,10 @@ const InviteMembers = ({navigation, route}: Props) => {
                     {
                       lineHeight: 25,
                       textAlign: 'center',
-                      color: '#ffffff',
+                      color: '#000',
 
                       marginBottom: 30,
+                      marginTop: 30,
                     },
                   ]}>
                   No user found
@@ -158,7 +159,7 @@ export default InviteMembers;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
 
     padding: 10,
   },
@@ -190,12 +191,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    backgroundColor: '#E2A8FE20',
+    backgroundColor: '#00000005',
     height: 53,
-    width: '90%',
+    width: '105%',
 
-    marginTop: 10,
-    marginBottom: 30,
     borderRadius: 3,
     paddingLeft: 15,
     fontSize: 15,
@@ -208,6 +207,6 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: '#ffffff',
+    color: '#000',
   },
 });

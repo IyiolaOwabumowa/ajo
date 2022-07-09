@@ -60,8 +60,6 @@ const CircleDashboard = ({route}: Props) => {
     return Math.ceil(moment.duration(later.diff(now)).asDays());
   };
 
-
-
   useEffect(() => {
     if (active) {
       setOwner(active._creator?.toString() === profile._id?.toString());
@@ -169,7 +167,6 @@ const CircleDashboard = ({route}: Props) => {
     }
   }, [active]);
 
-
   const circleDetails = () => {
     //update circle first
     const data = {
@@ -192,102 +189,88 @@ const CircleDashboard = ({route}: Props) => {
         <View
           style={{
             justifyContent: 'center',
-            alignItems: 'flex-start',
-            backgroundColor: '#733a78',
-            paddingLeft: 20,
-            marginTop: 40,
-            height: 165,
-            marginRight: 30,
-            width: '70%',
-            borderRadius: 5,
-          }}></View>
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            backgroundColor: '#000000',
-            paddingLeft: 20,
-            marginTop: -120,
-            marginLeft: 60,
-            height: 130,
-            width: '70%',
-            borderRadius: 5,
-          }}></View>
-
-        <View
-          style={{
-            justifyContent: 'center',
             alignItems: 'center',
+            backgroundColor: '#E2A8FE40',
+            paddingBottom: 40,
+
+            height: 165,
+
+            width: '100%',
+            borderRadius: 5,
           }}>
-          <BlurView
-            style={styles.absolute}
-            blurType="materialDark"
-            blurAmount={30}
-            reducedTransparencyFallbackColor="dark">
-            <View
-              style={{
-                flex: 1,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}>
-              {active.round.count - 1 == active.capacity ? (
-                <>
-                  <Text
-                    style={[
-                      styles.header,
-                      {textAlign: 'center', fontSize: 15, lineHeight: 30},
-                    ]}>
-                    This ajo has ended
-                  </Text>
-                </>
-              ) : (
-                <>
-                  {active.started ? (
-                    <>
-                      <Text
-                        style={{
-                          fontFamily: 'Axiforma-MEDIUM',
-                          fontSize: 15,
-                          textAlign: 'center',
+          <View
+            style={{
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <View style={styles.absolute}>
+              <View
+                style={{
+                  flex: 1,
 
-                          color: 'white',
-                        }}>
-                        {headline}
-                      </Text>
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                {active.round.count - 1 == active.capacity ? (
+                  <>
+                    <Text
+                      style={[
+                        styles.header,
+                        {textAlign: 'center', fontSize: 15, lineHeight: 30},
+                      ]}>
+                      This ajo has ended
+                    </Text>
+                  </>
+                ) : (
+                  <>
+                    {active.started ? (
+                      <>
+                        <Text
+                          style={{
+                            fontFamily: 'Axiforma-MEDIUM',
+                            fontSize: 15,
+                            textAlign: 'center',
 
-                      {/* <Text
+                            color: 'black',
+                          }}>
+                          {headline}
+                        </Text>
+
+                        {/* <Text
                         style={[
                           styles.header,
                           {textAlign: 'center', fontSize: 14, lineHeight: 30},
                         ]}>
                         We're paying {round.fundingNow}
                       </Text> */}
-                    </>
-                  ) : (
-                    <Text
-                      style={[
-                        styles.header,
-                        {textAlign: 'center', fontSize: 16, lineHeight: 30},
-                      ]}>
-                      This ajo hasn't started
-                    </Text>
-                  )}
-                </>
-              )}
-            </View>
+                      </>
+                    ) : (
+                      <Text
+                        style={[
+                          styles.header,
+                          {textAlign: 'center', fontSize: 16, lineHeight: 30},
+                        ]}>
+                        This ajo hasn't started
+                      </Text>
+                    )}
+                  </>
+                )}
+              </View>
 
-            <View
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                backgroundColor: '#733a78',
-                borderBottomLeftRadius: 3,
-                borderBottomRightRadius: 3,
-                width: '100%',
-                paddingTop: 20,
-                paddingBottom: 20,
-              }}>
-              {/* <View
+              <View
+                style={{
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#E2A8FE50',
+                  borderBottomLeftRadius: 3,
+                  borderBottomRightRadius: 3,
+
+                  paddingLeft: 20,
+                  paddingRight: 20,
+                  paddingTop: 15,
+                  paddingBottom: 15,
+                }}>
+                {/* <View
             style={{
               backgroundColor: '#0A3C25',
               padding: 5,
@@ -299,50 +282,60 @@ const CircleDashboard = ({route}: Props) => {
             </Text>
           </View> */}
 
-              {active.round.count - 1 == active.capacity ? (
-                <>
-                  <Text style={[styles.body, {color: "white", fontSize: 15}]}>
-                    Circle owner can decide to restart this ajo
-                  </Text>
-                </>
-              ) : (
-                <>
-                  {!active.started ? (
-                    <Text style={[styles.body, {color: "white", fontSize: 15}]}>
-                      Circle owner can decide to start this ajo
+                {active.round.count - 1 == active.capacity ? (
+                  <>
+                    <Text style={[styles.body, {color: 'black', fontSize: 15}]}>
+                      Circle owner can decide to restart this ajo
                     </Text>
-                  ) : (
-                    <>
-                      {fundingDate.toString().length >= 1 ? (
-                        <>
-                          <Text style={[styles.body, {fontSize: 13}]}>
-                            Your wallet will be funded
-                            {fundingDate == 0
-                              ? 'today'
-                              : ` in ${fundingDate} ${
-                                  fundingDate < 2 ? 'day' : 'days'
-                                }`}{' '}
-                            {/* (Round {converter.toWords(fundingRound)}) */}
-                          </Text>
-                        </>
-                      ) : (
-                        <>
-                          <Text style={[styles.body, {fontSize: 13}]}>
-                            You've already been funded, remember to keep paying
-                            your dues.
-                          </Text>
-                        </>
-                      )}
-                    </>
-                  )}
-                </>
-              )}
+                  </>
+                ) : (
+                  <>
+                    {!active.started ? (
+                      <Text
+                        style={[styles.body, {color: 'black', fontSize: 15}]}>
+                        Circle owner can decide to start this ajo
+                      </Text>
+                    ) : (
+                      <>
+                        {fundingDate.toString().length >= 1 ? (
+                          <>
+                            <Text style={[styles.body, {fontSize: 13}]}>
+                              Your wallet will be funded
+                              {fundingDate == 0
+                                ? 'today'
+                                : ` in ${fundingDate} ${
+                                    fundingDate < 2 ? 'day' : 'days'
+                                  }`}{' '}
+                              {/* (Round {converter.toWords(fundingRound)}) */}
+                            </Text>
+                          </>
+                        ) : (
+                          <>
+                            <Text style={[styles.body, {fontSize: 13}]}>
+                              You've already been funded, remember to keep
+                              paying your dues.
+                            </Text>
+                          </>
+                        )}
+                      </>
+                    )}
+                  </>
+                )}
+              </View>
             </View>
-          </BlurView>
+          </View>
         </View>
 
         {active.started == false ? (
           <>
+            <View style={{flex:0.95, alignItems:"center", justifyContent:"center"}}>
+              <Image
+                source={require('../../assets/images/waiting.png')}
+                resizeMode="contain"
+                style={{height: '60%'}}
+              />
+            </View>
+
             {owner && (
               <TouchableOpacity
                 activeOpacity={0.8}
@@ -372,9 +365,9 @@ const CircleDashboard = ({route}: Props) => {
                     );
                   } else {
                     Alert.alert(
-                      '',
+                      'Important',
                       active.members.length < 2
-                        ? `\nTo start this ajo, your circle must\n have at least one other member.\n\n`
+                        ? `To start this ajo, your circle must\n have at least one other member.`
                         : `\nDo you want to start this ajo with only ${
                             active.members.length
                           }${
@@ -440,7 +433,8 @@ const CircleDashboard = ({route}: Props) => {
                   styles.transBar,
                   {
                     alignItems: 'center',
-                    backgroundColor: '#733a78',
+                    justifyContent: 'center',
+                    backgroundColor: '#E2A8FE',
                     marginTop: 50,
                     marginBottom: 0,
                   },
@@ -454,18 +448,18 @@ const CircleDashboard = ({route}: Props) => {
                     <Text
                       style={[
                         styles.body,
-                        {fontSize: 15, textAlign: 'center', color: '#fff'},
+                        {fontSize: 15, textAlign: 'center', color: '#000'},
                       ]}>
                       Start Ajo
                     </Text>
                   </>
                 )}
 
-                <Image
+                {/* <Image
                   source={require('../../assets/images/forward-arrow.png')}
                   resizeMode="contain"
-                  style={{width: 10, height: '60%'}}
-                />
+                  style={{width: 20, height: '60%'}}
+                /> */}
               </TouchableOpacity>
             )}
           </>
@@ -636,15 +630,15 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     alignItems: 'center',
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   absolute: {
     flexDirection: 'column',
-    position: 'absolute',
-    height: 180,
+
+    height: 150,
     width: '90%',
     borderRadius: 6,
-    top: -180,
+
     justifyContent: 'center',
     alignItems: 'center',
     paddingTop: 0,
@@ -693,11 +687,11 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 29,
-    color: 'white',
+    color: 'black',
   },
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: '#fff',
+    color: '#000',
   },
 });

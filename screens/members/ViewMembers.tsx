@@ -183,7 +183,7 @@ export default ViewMembers;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   transBar: {
     justifyContent: 'center',

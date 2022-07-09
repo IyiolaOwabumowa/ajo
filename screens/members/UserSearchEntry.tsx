@@ -91,11 +91,14 @@ const UserSearchEntry = ({
   // }, [invitedMomentsAgo]);
 
   return (
+    <View style={{justifyContent:"center", alignItems:"center"}}>
+
+    
     <View style={styles.container}>
       <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <View>
           {/* <Text style={styles.body}>{name}</Text> */}
-          <Text style={[styles.body, {fontSize: 13}]}>@{name}</Text>
+          <Text style={[styles.body, {fontSize: 13}]}>{name}</Text>
           {/* <View
             style={{
               borderRadius: 3,
@@ -110,7 +113,7 @@ const UserSearchEntry = ({
       {loading ? (
         <ActivityIndicator
           style={{padding: 5, marginRight: 30}}
-          color={'white'}
+          color={'black'}
           size={'small'}
         />
       ) : (
@@ -137,6 +140,7 @@ const UserSearchEntry = ({
         </TouchableOpacity>
       )}
     </View>
+    </View>
   );
 };
 
@@ -145,13 +149,19 @@ export default UserSearchEntry;
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
+    height:55,
     width: '100%',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderRadius: 5,
-    backgroundColor: '#02000A',
-    padding: 25,
-    marginBottom: 15,
+    borderRadius: 3,
+    backgroundColor: '#E2A8FE40',
+    paddingLeft: 20,
+    paddingRight: 20,
+    // marginLeft: 10,
+    // marginRight:10,
+    marginTop:15
+
+
   },
   invite: {
     padding: 5,
@@ -202,6 +212,6 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 12,
-    color: '#ffffff',
+    color: '#000',
   },
 });

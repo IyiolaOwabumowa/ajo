@@ -69,8 +69,7 @@ function createCircle(token, form) {
       return response;
     })
     .catch(function (error) {
-      console.log(error);
-      return error;
+      return error
     });
 }
 

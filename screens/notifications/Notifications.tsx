@@ -39,7 +39,7 @@ const Notifications = () => {
               {
                 lineHeight: 25,
                 textAlign: 'center',
-                color: '#ffffff',
+                color: '#000',
                 paddingLeft: 30,
                 paddingRight: 30,
                 marginBottom: 30,
@@ -72,7 +72,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   transBar: {
     justifyContent: 'center',

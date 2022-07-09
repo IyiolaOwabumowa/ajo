@@ -212,8 +212,8 @@ const SettingItem = ({
               !deletable
                 ? styles.body
                 : paused
-                ? [styles.body, {color: '#D03B3B'}]
-                : [styles.body, {color: '#ffffff'}]
+                ? [styles.body, {color: '#00000040'}]
+                : [styles.body, {color: '#000'}]
             }>
             {title}
             {deactivated ? ' (Deactivated)' : ''}
@@ -253,16 +253,15 @@ const SettingItem = ({
                 source={require('../../assets/images/forward-arrow.png')}
                 resizeMode="contain"
                 style={{
-                  width: 10,
-                  height: '60%',
-                  opacity: paused ? 1 : 0.3,
+                  width: 20, height: '100%',
+                  opacity: paused ? 1 : 0.9,
                 }}
               />
             ) : (
               <Image
                 source={require('../../assets/images/forward-arrow.png')}
                 resizeMode="contain"
-                style={{width: 10, height: '60%'}}
+                style={{width: 20, height: '100%'}}
               />
             )}
           </>
@@ -280,7 +279,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
   },
   highlighter: {
-    backgroundColor: '#02000A',
+    backgroundColor: '#E2A8FE40',
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
@@ -336,6 +335,6 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: '#E2A8FE',
+    color: '#000',
   },
 });

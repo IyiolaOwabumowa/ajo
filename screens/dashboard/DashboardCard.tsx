@@ -100,7 +100,7 @@ const DashboardCard = ({
                 textDecorationStyle:"dotted",
                 fontSize: wallet ? 14 : 20,
                 marginTop: wallet ? 10 : 0,
-                color: wallet ? '#000' : '#000',
+                color: wallet ? '#fff' : '#fff',
                 lineHeight: wallet ? 18 : 40,
                 fontFamily: 'Axiforma-Medium',
               },
@@ -122,7 +122,7 @@ const DashboardCard = ({
                 textDecorationStyle:"dotted",
                 fontSize: wallet ? 14 : 20,
                 marginTop: wallet ? 10 : 0,
-                color: wallet ? '#000' : '#000',
+                color: wallet ? '#fff' : '#fff',
                 lineHeight: wallet ? 18 : 40,
                 fontFamily: 'Axiforma-Medium',
                 

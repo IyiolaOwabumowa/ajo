@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { enableScreens } from 'react-native-screens';
+import {enableScreens} from 'react-native-screens';
 import {
   SafeAreaView,
   ScrollView,
@@ -119,7 +119,7 @@ const AppWrapper = () => {
   }
 
   React.useEffect(() => {
-    if (Platform.OS === "ios") {
+    if (Platform.OS === 'ios') {
       enableScreens(false);
     }
   }, []);
@@ -287,17 +287,18 @@ const AppWrapper = () => {
           component={PersonalInformation}
           options={{
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
-            headerTitle: '',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
+            headerTitle:"Getting to know you",
             headerRight: () => {
               return (
                 <TouchableOpacity
@@ -312,7 +313,7 @@ const AppWrapper = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={{color: 'white', fontSize: 16}}>Logout</Text>
+                  <Text style={{color: 'black', fontSize: 16}}>Logout</Text>
                 </TouchableOpacity>
               );
             },
@@ -323,17 +324,18 @@ const AppWrapper = () => {
           component={BankAccount}
           options={{
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
-            headerTitle: '',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
+            headerTitle:'How to pay you',
             headerRight: () => {
               return (
                 <TouchableOpacity
@@ -348,7 +350,7 @@ const AppWrapper = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={{color: 'white', fontSize: 16}}>Logout</Text>
+                  <Text style={{color: 'black', fontSize: 16}}>Logout</Text>
                 </TouchableOpacity>
               );
             },
@@ -359,17 +361,18 @@ const AppWrapper = () => {
           component={AddCard}
           options={{
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
-            headerTitle: '',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
+            headerTitle:"How to charge you",
             headerRight: () => {
               return (
                 <TouchableOpacity
@@ -384,7 +387,7 @@ const AppWrapper = () => {
                     justifyContent: 'center',
                     alignItems: 'center',
                   }}>
-                  <Text style={{color: 'white', fontSize: 16}}>Logout</Text>
+                  <Text style={{color: 'black', fontSize: 16}}>Logout</Text>
                 </TouchableOpacity>
               );
             },
@@ -407,17 +410,18 @@ const AppWrapper = () => {
           component={CreateAccount}
           options={{
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
-            headerTitle: '',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
+            headerTitle: 'Create an Account',
           }}
         />
         <Stack.Screen
@@ -425,17 +429,18 @@ const AppWrapper = () => {
           component={Login}
           options={{
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
-            headerTitle: '',
+            headerTitle: 'Login',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
           }}
         />
         <Stack.Screen
@@ -443,17 +448,18 @@ const AppWrapper = () => {
           component={ForgotPassword}
           options={{
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
-            headerTitle: '',
+            headerTitle:'Reset Password',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
           }}
         />
         <Stack.Screen
@@ -485,6 +491,18 @@ const AppWrapper = () => {
           name="Dashboard"
           component={Dashboard}
           options={{
+            headerStyle: {
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
+            },
+            headerBackTitleStyle: {
+              color: '#000',
+            },
+            headerTitleStyle: {
+              color: '#000',
+            },
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
             headerLeft: () => {
               return (
                 <TouchableOpacity style={{marginLeft: 30}}>
@@ -495,10 +513,6 @@ const AppWrapper = () => {
                   />
                 </TouchableOpacity>
               );
-            },
-            headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
             },
             headerRight: () => {
               return (
@@ -514,19 +528,18 @@ const AppWrapper = () => {
           name="Transactions"
           component={Transactions}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
             headerTitle: () => {
               return <Text style={styles.body}>Transactions</Text>;
             },
@@ -558,19 +571,17 @@ const AppWrapper = () => {
           name="AddCard"
           component={AddCard}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
             headerBackTitle: 'Back',
             headerTitle: () => {
               return <Text style={styles.body}>Card Details</Text>;
@@ -581,19 +592,18 @@ const AppWrapper = () => {
           name="BankAccount"
           component={BankAccount}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
             headerTitle: () => {
               return <Text style={styles.body}>{'Bank Account'}</Text>;
             },
@@ -612,40 +622,40 @@ const AppWrapper = () => {
           name="Circles"
           component={Circles}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
+
             headerTitle: () => {
               return <Text style={styles.body}>My Circles</Text>;
             },
-            headerRight: () => {
-              return (
-                <TouchableOpacity
-                  onPress={() => {
-                    navigation.navigate('CreateCircle');
-                  }}
-                  style={{
-                    marginRight: 10,
-                    // backgroundColor: '#598E76',
-                    padding: 10,
-                    borderRadius: 3,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Text style={[styles.body, {}]}>Create</Text>
-                </TouchableOpacity>
-              );
-            },
+            // headerRight: () => {
+            //   return (
+            //     <TouchableOpacity
+            //       onPress={() => {
+            //         navigation.navigate('CreateCircle');
+            //       }}
+            //       style={{
+            //         marginRight: 10,
+            //         // backgroundColor: '#598E76',
+            //         padding: 10,
+            //         borderRadius: 3,
+            //         justifyContent: 'center',
+            //         alignItems: 'center',
+            //       }}>
+            //       <Text style={[styles.body, {}]}>Create</Text>
+            //     </TouchableOpacity>
+            //   );
+            // },
           }}
         />
         <Stack.Screen
@@ -698,19 +708,17 @@ const AppWrapper = () => {
           name="CreateCircle"
           component={CreateCircle}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
             headerBackTitle: 'Back',
 
             headerTitle: () => {
@@ -722,19 +730,18 @@ const AppWrapper = () => {
           name="CircleDashboard"
           component={CircleDashboard}
           options={({route}) => ({
-            animationEnabled: false,
             gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
             headerBackTitle: 'Back',
 
             headerTitle: () => {
@@ -773,19 +780,17 @@ const AppWrapper = () => {
           name="CircleSettings"
           component={CircleSettings}
           options={({route}) => ({
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
             headerBackTitle: 'Back',
 
             headerTitle: () => {
@@ -797,19 +802,17 @@ const AppWrapper = () => {
           name="ViewMembers"
           component={ViewMembers}
           options={({route}) => ({
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
             headerBackTitle: 'Back',
 
             headerTitle: () => {
@@ -825,19 +828,17 @@ const AppWrapper = () => {
           name="InviteMembers"
           component={InviteMembers}
           options={({route}) => ({
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
             headerBackTitle: 'Back',
 
             headerTitle: () => {
@@ -853,19 +854,17 @@ const AppWrapper = () => {
           name="EditCircle"
           component={EditCircle}
           options={({route}) => ({
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
             headerBackTitle: 'Back',
 
             headerTitle: () => {
@@ -890,19 +889,19 @@ const AppWrapper = () => {
           name="Notifications"
           component={Notifications}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
+
             headerTitle: () => {
               return <Text style={styles.body}>Agogo</Text>;
             },
@@ -921,19 +920,18 @@ const AppWrapper = () => {
           name="Settings"
           component={Settings}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
             headerTitle: () => {
               return <Text style={styles.body}>Settings</Text>;
             },
@@ -943,19 +941,19 @@ const AppWrapper = () => {
           name="PersonalInformation"
           component={PersonalInformation}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
+
             headerTitle: () => {
               return <Text style={styles.body}>Personal</Text>;
             },
@@ -965,19 +963,18 @@ const AppWrapper = () => {
           name="NotificationSettings"
           component={NotificationSettings}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
             headerTitle: () => {
               return <Text style={styles.body}>Notification Settings</Text>;
             },
@@ -987,19 +984,18 @@ const AppWrapper = () => {
           name="ChangePassword"
           component={ChangePassword}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
             headerTitle: () => {
               return <Text style={styles.body}>Change Password</Text>;
             },
@@ -1009,19 +1005,18 @@ const AppWrapper = () => {
           name="TermsandConditions"
           component={TermsandConditions}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
             headerTitle: () => {
               return <Text style={styles.body}>{'Terms & Conditions'}</Text>;
             },
@@ -1031,19 +1026,18 @@ const AppWrapper = () => {
           name="PrivacyPolicy"
           component={PrivacyPolicy}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
             headerTitle: () => {
               return <Text style={styles.body}>{'Privacy Policy'}</Text>;
             },
@@ -1054,19 +1048,17 @@ const AppWrapper = () => {
           name="AddCardSettings"
           component={AddCard}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
             headerBackTitle: 'Back',
             headerTitle: () => {
               return <Text style={styles.body}>Card Details</Text>;
@@ -1077,19 +1069,19 @@ const AppWrapper = () => {
           name="BankAccountSettings"
           component={BankAccount}
           options={{
-            animationEnabled: false,
-            gestureEnabled: false,
             headerStyle: {
-              backgroundColor: '#0a0612',
-              shadowColor: '#0a0612',
+              backgroundColor: '#f8e9ff',
+              shadowColor: '#f8e9ff',
             },
             headerBackTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
             headerTitleStyle: {
-              color: '#fff',
+              color: '#000',
             },
-            headerTintColor: '#fff',
+            headerTintColor: '#000',
+            headerBackTitle: 'Back',
+
             headerTitle: () => {
               return <Text style={styles.body}>{'Bank Account'}</Text>;
             },
@@ -1100,62 +1092,68 @@ const AppWrapper = () => {
   };
 
   return (
-    <View style={{flex: 1, backgroundColor:"#0a0612"}}>
+    <View style={{flex: 1, backgroundColor: '#0a0612'}}>
+      <NavigationContainer theme={DarkTheme} linking={linking}>
+        <Tab.Navigator
+          tabBarOptions={{
+            activeTintColor: '#000',
+            showLabel: true,
+            // inactiveTintColor: 'lightgray',
+            activeBackgroundColor: '#E2A8FE50',
 
-    <NavigationContainer theme={DarkTheme} linking={linking}>
-      <Tab.Navigator
-        tabBarOptions={{
-        
-          activeTintColor: '#000',
-          showLabel: true,
-          // inactiveTintColor: 'lightgray',
-          activeBackgroundColor: '#733a78',
-
-
-          tabStyle: {
-           paddingBottom: 1,
-           paddingTop: 0,
-            marginBottom:20,
-            marginRight: 20,
-             borderRadius: 5,
-          },
-          // inactiveBackgroundColor: '#b55031',
-          labelStyle: {
-            fontSize: 13,
-            color:"white",
-            marginBottom:10
-          },
-          style: {
-            backgroundColor: '#0a0612',
-            borderTopColor: '#ffffff00',
-            paddingTop: 8,
-            paddingBottom:0,
-            height:90, 
-          },
-        }}>
-        {!profile == true ? (
-          <Tab.Screen
-            name="Splash"
-            component={AuthScreen}
-            options={{tabBarVisible: false}}
-          />
-        ) : (
-          <>
-            {onboarding ? (
-              <Tab.Screen
-                name="OnBoardingScreen"
-                component={OnBoardingScreen}
-                options={{
-
-                  tabBarVisible: false}}
-              />
-            ) : (
-              <Tab.Screen
-                name="Home"
-                component={HomeScreen}
-                options={{
-                  tabBarIcon: ({focused}) => {
-                    if (focused) {
+            tabStyle: {
+              paddingBottom: 1,
+              paddingTop: 0,
+              marginBottom: 20,
+              marginLeft:20,
+              marginRight: 20,
+              borderRadius: 5,
+            },
+            // inactiveBackgroundColor: '#b55031',
+            labelStyle: {
+              fontSize: 13,
+              color: '#000',
+              marginBottom: 10,
+            },
+            style: {
+              backgroundColor: '#fff',
+              borderTopColor: '#ffffff00',
+              paddingTop: 8,
+              paddingBottom: 0,
+              height: 90,
+            },
+          }}>
+          {!profile == true ? (
+            <Tab.Screen
+              name="Splash"
+              component={AuthScreen}
+              options={{tabBarVisible: false}}
+            />
+          ) : (
+            <>
+              {onboarding ? (
+                <Tab.Screen
+                  name="OnBoardingScreen"
+                  component={OnBoardingScreen}
+                  options={{
+                    tabBarVisible: false,
+                  }}
+                />
+              ) : (
+                <Tab.Screen
+                  name="Home"
+                  component={HomeScreen}
+                  options={{
+                    tabBarIcon: ({focused}) => {
+                      if (focused) {
+                        return (
+                          <Image
+                            source={require('./assets/images/home.png')}
+                            resizeMode="contain"
+                            style={{width: '100%', height: '60%'}}
+                          />
+                        );
+                      }
                       return (
                         <Image
                           source={require('./assets/images/home.png')}
@@ -1163,10 +1161,19 @@ const AppWrapper = () => {
                           style={{width: '100%', height: '60%'}}
                         />
                       );
-                    }
+                    },
+                  }}
+                />
+              )}
+
+              <Tab.Screen
+                name="Circles"
+                component={CircleScreen}
+                options={{
+                  tabBarIcon: () => {
                     return (
                       <Image
-                        source={require('./assets/images/home.png')}
+                        source={require('./assets/images/circle.png')}
                         resizeMode="contain"
                         style={{width: '100%', height: '60%'}}
                       />
@@ -1174,58 +1181,41 @@ const AppWrapper = () => {
                   },
                 }}
               />
-            )}
-
-            <Tab.Screen
-              name="Circles"
-              component={CircleScreen}
-              options={{
-                tabBarIcon: () => {
-                  return (
-                    <Image
-                      source={require('./assets/images/circle.png')}
-                      resizeMode="contain"
-                      style={{width: '100%', height: '60%'}}
-                    />
-                  );
-                },
-              }}
-            />
-            <Tab.Screen
-              name="Agogo"
-              component={NotificationsScreen}
-              options={{
-                tabBarBadge: 4,
-                tabBarIcon: () => {
-                  return (
-                    <Image
-                      source={require('./assets/images/notification.png')}
-                      resizeMode="contain"
-                      style={{width: '100%', height: '60%'}}
-                    />
-                  );
-                },
-              }}
-            />
-            <Tab.Screen
-              name="Settings"
-              component={SettingsScreen}
-              options={{
-                tabBarIcon: () => {
-                  return (
-                    <Image
-                      source={require('./assets/images/settings.png')}
-                      resizeMode="contain"
-                      style={{width: '100%', height: '60%'}}
-                    />
-                  );
-                },
-              }}
-            />
-          </>
-        )}
-      </Tab.Navigator>
-    </NavigationContainer>
+              <Tab.Screen
+                name="Agogo"
+                component={NotificationsScreen}
+                options={{
+                  tabBarBadge: 4,
+                  tabBarIcon: () => {
+                    return (
+                      <Image
+                        source={require('./assets/images/notification.png')}
+                        resizeMode="contain"
+                        style={{width: '100%', height: '60%'}}
+                      />
+                    );
+                  },
+                }}
+              />
+              <Tab.Screen
+                name="Settings"
+                component={SettingsScreen}
+                options={{
+                  tabBarIcon: () => {
+                    return (
+                      <Image
+                        source={require('./assets/images/settings.png')}
+                        resizeMode="contain"
+                        style={{width: '100%', height: '60%'}}
+                      />
+                    );
+                  },
+                }}
+              />
+            </>
+          )}
+        </Tab.Navigator>
+      </NavigationContainer>
     </View>
   );
 };
@@ -1251,7 +1241,7 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 15,
-    color: 'white',
+    color: '#000',
   },
   button: {
     backgroundColor: 'white',

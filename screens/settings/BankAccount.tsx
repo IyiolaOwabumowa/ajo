@@ -136,10 +136,10 @@ const BankAccount = () => {
               {
                 lineHeight: 25,
                 textAlign: 'left',
-                color: '#ffffff',
+                color: '#000',
                 paddingLeft: 20,
-
-                marginBottom: 30,
+                marginTop:10,
+                marginBottom: 20,
               },
             ]}>
             This is where we'll send all the {'\n'}
@@ -153,11 +153,11 @@ const BankAccount = () => {
             {
               lineHeight: 25,
               textAlign: 'center',
-              color: '#ffffff',
+              color: '#000',
               paddingLeft: 30,
               paddingRight: 30,
-              marginBottom: 30,
-              marginTop: 10,
+              marginTop:30,
+              marginBottom: 20
             },
           ]}>
           This is where we'll send all the {'\n'}
@@ -187,7 +187,7 @@ const BankAccount = () => {
               color: '#000',
             }}
             bottomOffset={-800}
-            theme="DARK"
+            theme="LIGHT"
           />
         </View>
 
@@ -207,7 +207,7 @@ const BankAccount = () => {
           activeOpacity={0.89}
           style={{
             backgroundColor: '#E2A8FE',
-            height: 53,
+            height: 45,
             borderRadius: 3,
             justifyContent: 'center',
             alignItems: 'center',
@@ -260,7 +260,7 @@ export default BankAccount;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   bar: {
     width: '100%',
@@ -289,11 +289,11 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
-    color: 'white',
+    color: 'black',
   },
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: 'white',
+    color: 'black',
   },
 });

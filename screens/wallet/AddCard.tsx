@@ -87,9 +87,9 @@ const AddCard = () => {
               {
                 lineHeight: 25,
                 textAlign: 'left',
-                color: '#ffffff',
+                color: '#000',
                 paddingLeft: 20,
-
+                marginTop:10,
                 marginBottom: 30,
               },
             ]}>
@@ -104,11 +104,11 @@ const AddCard = () => {
             {
               lineHeight: 25,
               textAlign: 'center',
-              color: '#ffffff',
+              color: '#000',
               paddingLeft: 30,
               paddingRight: 30,
               marginBottom: 30,
-              marginTop: 10,
+              marginTop:30,
             },
           ]}>
           Anytime your ajo payment is due, {'\n'}
@@ -120,7 +120,7 @@ const AddCard = () => {
         <TextInput
           style={[styles.input, styles.body]}
           placeholder="Enter your card number"
-          placeholderTextColor="#ffffff60"
+          placeholderTextColor="#000"
           keyboardType="number-pad"
           value={form.cardNumber}
           maxLength={19}
@@ -140,7 +140,7 @@ const AddCard = () => {
             <TextInput
               style={[styles.input, styles.body]}
               placeholder="Expiry Month (MM)"
-              placeholderTextColor="#ffffff60"
+              placeholderTextColor="#000"
               value={form.expiryMonth}
               maxLength={2}
               onChangeText={text => {
@@ -156,7 +156,7 @@ const AddCard = () => {
             <TextInput
               style={[styles.input, styles.body]}
               placeholder="Expiry Year (YY)"
-              placeholderTextColor="#ffffff60"
+              placeholderTextColor="#000"
               value={form.expiryYear}
               maxLength={2}
               onChangeText={text => {
@@ -174,7 +174,7 @@ const AddCard = () => {
           <TextInput
             style={[styles.input, styles.body]}
             placeholder="CVV"
-            placeholderTextColor="#ffffff60"
+            placeholderTextColor="#000"
             keyboardType="number-pad"
             value={form.cvc}
             maxLength={3}
@@ -272,7 +272,7 @@ const AddCard = () => {
           }}
           style={{
             backgroundColor: '#E2A8FE',
-            height: 58,
+            height: 45,
             borderRadius: 3,
 
             justifyContent: 'center',
@@ -306,7 +306,7 @@ const AddCard = () => {
             styles.body,
             {textAlign: 'center', marginTop: 50, lineHeight: 20},
           ]}>
-          Ajo Technologies will never store your card information as all
+          Ajo will never store your card information as all
           payments and personal information are securely processed and encrypted
           by Paystack
         </Text>
@@ -320,7 +320,7 @@ export default AddCard;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   bar: {
     width: '70%',
@@ -349,11 +349,11 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
-    color: 'white',
+    color: 'black',
   },
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: 'white',
+    color: 'black',
   },
 });

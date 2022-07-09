@@ -46,7 +46,7 @@ export default PrivacyPolicy;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   bar: {
     width: '100%',
@@ -80,7 +80,7 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: 'white',
+    color: 'black',
     lineHeight: 30,
   },
 });

@@ -127,13 +127,13 @@ const PersonalInformation = () => {
               {
                 lineHeight: 25,
                 textAlign: 'left',
-                color: '#ffffff',
+                color: '#000',
                 paddingLeft: 20,
 
                 marginBottom: 20,
               },
             ]}>
-            We want to know how to address you on our app.
+            We want to know how to {"\n"}address you on our app.
           </Text>
         </>
       ) : (
@@ -143,7 +143,7 @@ const PersonalInformation = () => {
             {
               lineHeight: 25,
               textAlign: 'center',
-              color: '#ffffff',
+              color: '#000',
               paddingLeft: 30,
               paddingRight: 30,
               marginBottom: 30,
@@ -230,7 +230,7 @@ const PersonalInformation = () => {
           activeOpacity={0.89}
           style={{
             backgroundColor: '#E2A8FE',
-            height: 53,
+            height: 45,
             borderRadius: 3,
 
             justifyContent: 'center',
@@ -288,7 +288,7 @@ export default PersonalInformation;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   bar: {
     width: '70%',
@@ -317,11 +317,11 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
-    color: 'white',
+    color: 'black',
   },
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: '#FFFFFF',
+    color: '#000',
   },
 });

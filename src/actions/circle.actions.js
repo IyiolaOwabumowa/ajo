@@ -131,23 +131,44 @@ function createCircle(token, form) {
       .createCircle(token, form)
       .then(res => {
         if (res.status == 200) {
-          dispatch(success(res.data.circle));
-        } else if (res.status == 401) {
+          dispatch(success(res.data.circle, true));
+          setTimeout(() => {
+            dispatch(success(res.data.circle, false));
+          }, 3000);
+        }
+        if (res.status == 401) {
           dispatch(authActions.deleteUserToken());
           dispatch(authActions.deleteId());
-        } else {
-          dispatch(
-            failure("We're currently fixing an issue, please try again later"),
-          );
         }
+        if (res.response) {
+          if (res.response.status == 400) {
+            dispatch(failure(res.response.data.message.body));
+            setTimeout(() => {
+              dispatch(failure(null));
+            }, 3000);
+          }
+        }
+        //  else {
+        //   dispatch(
+        //     failure("We're currently fixing an issue, please try again later"),
+        //   );
+        //   setTimeout(() => {
+        //     dispatch(failure(null));
+        //   }, 3000);
+        // }
       })
       .catch(err => {
+        console.log(err);
         dispatch(failure(err));
       });
   };
 
-  function success(circle) {
-    return {type: circleConstants.CREATE_CIRCLE_SUCCESS, circle: circle};
+  function success(circle, successful) {
+    return {
+      type: circleConstants.CREATE_CIRCLE_SUCCESS,
+      circle: circle,
+      successful,
+    };
   }
   function failure(error) {
     return {type: circleConstants.CREATE_CIRCLE_FAILURE, error};

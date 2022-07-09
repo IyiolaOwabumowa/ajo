@@ -170,7 +170,7 @@ const EditCircle = ({route}: any) => {
         activeOpacity={0.89}
         style={{
           backgroundColor: '#E2A8FE',
-          height: 53,
+          height: 45,
           borderRadius: 3,
 
           justifyContent: 'center',

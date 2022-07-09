@@ -21,8 +21,8 @@ const NotificationItem = ({title, content, day}: any) => {
   return (
     <View style={styles.container}>
       <View style={{width: '70%'}}>
-        <Text style={[styles.body, {lineHeight: 20, fontWeight:"bold"}]}>{title}</Text>
-        <Text style={[styles.body, {lineHeight: 20, marginTop:20, color:"white"}]}>{content}</Text>
+        <Text style={[styles.body, {lineHeight: 20, fontWeight:"100"}]}>{title}</Text>
+        <Text style={[styles.body, {lineHeight: 20, marginTop:20, color:"black"}]}>{content}</Text>
       </View>
       <Text style={[styles.body, {lineHeight: 20}]}>
         {moment(day).fromNow()}
@@ -37,7 +37,7 @@ const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    backgroundColor: '#02000A',
+    backgroundColor: '#E2A8FE40',
     borderRadius: 5,
     padding: 20,
     marginBottom: 20,
@@ -86,6 +86,6 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 12,
-    color: '#E2A8FE',
+    color: '#000',
   },
 });

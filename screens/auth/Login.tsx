@@ -88,7 +88,7 @@ const Login: React.FC<Props> = ({route, navigation}) => {
         activeOpacity={0.89}
         style={{
           backgroundColor: '#E2A8FE',
-          height: 53,
+          height: 45,
           borderRadius: 3,
           marginTop: 30,
           justifyContent: 'center',
@@ -115,7 +115,7 @@ const Login: React.FC<Props> = ({route, navigation}) => {
           <Text
             style={[
               styles.body,
-              {marginBottom: 30, color: '#E2A8FE', marginTop: 20, lineHeight:23},
+              {marginBottom: 30, color: 'red', marginTop: 20, lineHeight:23},
             ]}>
             {error}
           </Text>
@@ -131,7 +131,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
     padding: 20,
   },
   forgot: {
@@ -149,11 +149,11 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
-    color: 'white',
+    color: 'black',
   },
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 15,
-    color: 'white',
+    color: 'black',
   },
 });

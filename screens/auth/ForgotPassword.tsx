@@ -51,7 +51,7 @@ const ForgotPassword = () => {
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Enter the email you signed up with"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000050"
         keyboardType="email-address"
         autoCapitalize="none"
         value={email}
@@ -74,7 +74,7 @@ const ForgotPassword = () => {
         }}
         style={{
           backgroundColor: '#E2A8FE',
-          height: 53,
+          height: 45,
           borderRadius: 3,
           marginTop: 30,
           justifyContent: 'center',
@@ -91,7 +91,7 @@ const ForgotPassword = () => {
       <Text
         style={[
           styles.body,
-          {marginTop: 30, color: '#E2A8FE', lineHeight: 25},
+          {marginTop: 20, color: 'red', lineHeight: 25},
         ]}>
         {serverError && `${serverError}`}
         {'\n'}
@@ -107,7 +107,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
     padding: 20,
   },
   forgot: {
@@ -125,11 +125,11 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
-    color: 'white',
+    color: 'black',
   },
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 15,
-    color: 'white',
+    color: 'black',
   },
 });

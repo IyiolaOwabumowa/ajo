@@ -84,7 +84,7 @@ const ResetPassword = ({route}: any) => {
           activeOpacity={0.89}
           style={{
             backgroundColor: '#E2A8FE',
-            height: 53,
+            height: 45,
             borderRadius: 3,
 
             justifyContent: 'center',
@@ -118,17 +118,17 @@ const ResetPassword = ({route}: any) => {
           )}
         </TouchableOpacity>
         {error && (
-          <Text style={[styles.body, {marginTop: 30, color: '#E2A8FE'}]}>
+          <Text style={[styles.body, {marginTop: 5, color: '#E2A8FE'}]}>
             {error}
           </Text>
         )}
         {warning && (
-          <Text style={[styles.body, {marginTop: 30, color: '#E2A8FE'}]}>
+          <Text style={[styles.body, {marginTop: 5, color: '#E2A8FE'}]}>
             {warning}
           </Text>
         )}
         {message && (
-          <Text style={[styles.body, {marginTop: 30, color: '#E2A8FE'}]}>
+          <Text style={[styles.body, {marginTop: 5, color: '#E2A8FE'}]}>
             {message}
           </Text>
         )}

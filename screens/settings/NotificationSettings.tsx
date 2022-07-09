@@ -39,7 +39,7 @@ const NotificationSettings = ({navigation, route}: Props) => {
             {
               lineHeight: 25,
               textAlign: 'center',
-              color: '#ffffff',
+              color: '#000',
               paddingLeft: 30,
               paddingRight: 30,
               marginBottom: 30,
@@ -61,7 +61,7 @@ export default NotificationSettings;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
   },
   transBar: {
     justifyContent: 'center',

@@ -1,5 +1,11 @@
+const isEnvDev = process.env.NODE_ENV === 'development'
+
+if (isEnvDev) {
+  config.plugins.push('react-refresh/babel')
+}
+
 module.exports = {
-  presets: ['module:metro-react-native-babel-preset'],
+ presets: ['module:metro-react-native-babel-preset'],
   plugins: [
     ["module:react-native-dotenv", {
       "moduleName": "@env",

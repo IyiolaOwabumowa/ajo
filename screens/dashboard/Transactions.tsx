@@ -75,7 +75,7 @@ const Transactions = ({navigation, route}: Props) => {
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Type a circle name"
-        placeholderTextColor="#ffffff"
+        placeholderTextColor="#000"
         value={searchTerm}
         onChangeText={text => {
           setSearchTerm(text.toLowerCase());
@@ -88,7 +88,7 @@ const Transactions = ({navigation, route}: Props) => {
             {
               lineHeight: 25,
               textAlign: 'center',
-              color: '#ffffff',
+              color: '#000',
 
               marginBottom: 30,
             },
@@ -146,8 +146,7 @@ export default Transactions;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#0a0612',
-    padding: 10,
+    backgroundColor: '#fff',
   },
   transBar: {
     justifyContent: 'center',
@@ -177,11 +176,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    backgroundColor: '#E2A8FE20',
+    backgroundColor: '#000000010',
     height: 53,
-    marginTop: 10,
+    marginTop: 0,
     marginBottom: 30,
-    borderRadius: 3,
+    borderRadius: 0,
     paddingLeft: 15,
     fontSize: 15,
   },
@@ -193,6 +192,6 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: '#ffffff',
+    color: '#000',
   },
 });

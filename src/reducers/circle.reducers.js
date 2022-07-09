@@ -59,12 +59,14 @@ export default function circleReducer(state = initialState, action) {
       return {
         ...state,
         requesting: true,
+        successful: false,
       };
 
     case circleConstants.CREATE_CIRCLE_SUCCESS:
       return {
         ...state,
         requesting: false,
+        successful: action.successful,
         active: action.circle,
       };
 
@@ -72,6 +74,7 @@ export default function circleReducer(state = initialState, action) {
       return {
         ...state,
         requesting: false,
+        successful: false,
         circleError: action.error,
       };
 

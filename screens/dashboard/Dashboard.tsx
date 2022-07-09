@@ -103,7 +103,7 @@ const Dashboard = () => {
         style={{height: 50, marginTop: 50, marginBottom: 50}}>
         <View
           style={{
-            backgroundColor: '#E2A8FE20',
+            backgroundColor: '#E2A8FE50',
             paddingLeft: 20,
             paddingTop: 0,
             paddingRight: 20,
@@ -118,7 +118,7 @@ const Dashboard = () => {
           <Image
             source={require('../../assets/images/forward-arrow.png')}
             resizeMode="contain"
-            style={{width: '2%'}}
+            style={{width: '6%'}}
           />
         </View>
       </TouchableOpacity>
@@ -192,7 +192,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
     padding: 20,
   },
   center: {
@@ -216,6 +216,6 @@ const styles = StyleSheet.create({
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 14,
-    color: 'white',
+    color: '#000',
   },
 });

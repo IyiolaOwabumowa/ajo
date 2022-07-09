@@ -84,7 +84,7 @@ const CreateAccount = () => {
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Username"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000040"
         autoCapitalize="none"
         autoCorrect={false}
         value={form.username}
@@ -97,7 +97,7 @@ const CreateAccount = () => {
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Email Address"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000040"
         keyboardType="email-address"
         autoCapitalize="none"
         value={form.email}
@@ -111,7 +111,7 @@ const CreateAccount = () => {
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Password"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000040"
         secureTextEntry={true}
         value={form.password}
         onChangeText={text => {
@@ -122,7 +122,7 @@ const CreateAccount = () => {
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Re-enter your password"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000040"
         secureTextEntry={true}
       /> */}
       <Text style={[styles.body]}>Phone Number</Text>
@@ -130,7 +130,7 @@ const CreateAccount = () => {
       <TextInput
         style={[styles.input, styles.body]}
         placeholder="Phone Number"
-        placeholderTextColor="#ffffff60"
+        placeholderTextColor="#00000040"
         value={form.phone}
         maxLength= {11}
         onChangeText={text => {
@@ -159,7 +159,7 @@ const CreateAccount = () => {
         activeOpacity={0.89}
         style={{
           backgroundColor: '#E2A8FE',
-          height: 53,
+          height: 45,
           borderRadius: 3,
           marginTop: 30,
           justifyContent: 'center',
@@ -174,7 +174,7 @@ const CreateAccount = () => {
       <Text
         style={[
           styles.body,
-          {marginBottom: 30, color: '#E2A8FE', marginTop: 20},
+          {marginBottom: 30, color: 'red', marginTop: 20},
         ]}>
         {error && `${error}`}
       </Text>
@@ -188,7 +188,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#0a0612',
+    backgroundColor: '#fff',
     padding: 20,
   },
   input: {
@@ -203,11 +203,11 @@ const styles = StyleSheet.create({
   header: {
     fontFamily: 'Axiforma-Heavy',
     fontSize: 29,
-    color: 'white',
+    color: 'black',
   },
   body: {
     fontFamily: 'Axiforma-Medium',
     fontSize: 15,
-    color: 'white',
+    color: 'black',
   },
 });
