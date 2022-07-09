@@ -63,7 +63,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#0A3C25',
     padding: 15,
-    marginBottom: 25,
+    marginBottom: 10,
+    marginLeft:20,
+    marginRight:20,
+    marginTop:10
   },
   debit: {
     flexDirection: 'row',
@@ -72,7 +75,10 @@ const styles = StyleSheet.create({
     borderRadius: 5,
     backgroundColor: '#8B0000',
     padding: 15,
-    marginBottom: 25,
+    marginBottom: 10,
+    marginLeft:20,
+    marginRight:20,
+    marginTop:10
   },
   invite: {
     padding: 5,

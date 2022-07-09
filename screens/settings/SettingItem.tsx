@@ -78,7 +78,6 @@ const SettingItem = ({
           {
             text: 'Go Back',
             onPress: () => {
-              
               navigation.navigate('Circles');
             },
           },
@@ -168,7 +167,25 @@ const SettingItem = ({
           } else if (member && !owner) {
             //do nothing
           } else if (owner == true && title == 'Delete Circle') {
-            deleteCircle(active._id, token);
+            Alert.alert(
+              `Are you sure you want to delete ${active.circlename}?`,
+              '',
+              [
+                {
+                  text: 'Yes',
+
+                  onPress: () => {
+                    deleteCircle(active._id, token);
+                  },
+                },
+
+                {
+                  text: 'No',
+                  onPress: () => {},
+                  style: 'cancel',
+                },
+              ],
+            );
           } else if (owner == false && title == 'Leave Circle') {
             leaveCircle(active._id, token);
           }
@@ -253,7 +270,8 @@ const SettingItem = ({
                 source={require('../../assets/images/forward-arrow.png')}
                 resizeMode="contain"
                 style={{
-                  width: 20, height: '100%',
+                  width: 20,
+                  height: '100%',
                   opacity: paused ? 1 : 0.9,
                 }}
               />

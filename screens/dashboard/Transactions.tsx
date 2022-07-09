@@ -97,7 +97,7 @@ const Transactions = ({navigation, route}: Props) => {
         </Text>
       ) : (
         <>
-          <ScrollView>
+          <ScrollView showsVerticalScrollIndicator={true} >
             {transactions.map((transaction: any) => {
               return (
                 <TransactionItem
@@ -176,10 +176,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   input: {
-    backgroundColor: '#000000010',
+    backgroundColor: '#00000005',
     height: 53,
     marginTop: 0,
-    marginBottom: 30,
+    marginBottom:0,
     borderRadius: 0,
     paddingLeft: 15,
     fontSize: 15,
